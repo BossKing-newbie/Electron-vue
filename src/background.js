@@ -18,7 +18,7 @@ function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
     width: 400,
-    height: 550,
+    height: 600,
     center: true,
     resizable: false,
     autoHideMenuBar: true,
@@ -101,6 +101,13 @@ ipcMain.on('changWindowSize', e => {
   win.setSize(1050, 700)
   win.center()
   win.setTitle('主界面')
+  win.setResizable(false)
+})
+ipcMain.on('changLoginSize', e => {
+  win.setResizable(true)
+  win.setSize(400, 600)
+  win.center()
+  win.setTitle('登录界面')
   win.setResizable(false)
 })
 ipcMain.on('close', e =>

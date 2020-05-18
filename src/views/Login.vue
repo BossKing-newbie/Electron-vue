@@ -30,11 +30,17 @@ export default {
     receive (value1, value2) {
       this.comName = value1
       this.title = value2
+    },
+    changeLoginSize () {
+      ipcRenderer.send('changLoginSize')
     }
   },
   components: {
     login: LoginChlid,
     register: RegisterChild
+  },
+  mounted () {
+    this.changeLoginSize()
   }
 }
 </script>

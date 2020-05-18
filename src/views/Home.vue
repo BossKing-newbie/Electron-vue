@@ -2,13 +2,13 @@
   <el-container>
     <el-header>
       <!--工具栏组件-->
-      <toolbar></toolbar>
+      <toolbar @rendering-main="receive"></toolbar>
     </el-header>
     <el-container>
       <!--侧边导航栏-->
-      <sidebar @bar-click="receive"></sidebar>
+      <sidebar @bar-click="receive" :imageUrl="imageUrl"></sidebar>
       <!--主界面-->
-      <component :is="com"></component>
+      <component :is="com" @update-avatar="updateAvatar"></component>
     </el-container>
   </el-container>
 
@@ -19,12 +19,15 @@ import HomeToolBar from '../components/HomeToolBar'
 import HomeAside from '../components/HomeAside'
 import MainIndex from '../components/el-main/MainIndex'
 import MainPersonInfo from '../components/el-main/MainPersonInfo'
+// 修改密码组件
+import MainChangePwd from '../components/el-main/MainChangePwd'
 const { ipcRenderer } = require('electron')
 export default {
   name: 'Home',
   data () {
     return {
-      com: 'mainpage'
+      com: 'mainpage',
+      imageUrl: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
     }
   },
   mounted () {
@@ -37,13 +40,17 @@ export default {
     receive (val) {
       console.log(val)
       this.com = val
+    },
+    updateAvatar (avatar) {
+      this.imageUrl = avatar
     }
   },
   components: {
     toolbar: HomeToolBar,
     sidebar: HomeAside,
     mainpage: MainIndex,
-    info: MainPersonInfo
+    info: MainPersonInfo,
+    changepwd: MainChangePwd
   }
 }
 </script>

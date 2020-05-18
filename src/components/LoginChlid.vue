@@ -30,6 +30,11 @@ export default {
   methods: {
     login () {
       if (this.account === 'admin' && this.password === '123456') {
+        this.$message({
+          showClose: true,
+          message: '登录成功！欢迎您，admin',
+          type: 'success'
+        })
         this.$router.push('Home')
       } else {
         this.$message.error('用户名或密码错误')

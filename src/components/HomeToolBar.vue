@@ -3,7 +3,7 @@
     <el-row align="middle" type="flex">
       <el-image src="https://s1.ax1x.com/2020/05/16/Y6EZlQ.png"></el-image>
       <el-tooltip content="主界面" placement="bottom" class="item_gutter">
-        <el-button icon="el-icon-s-home" circle title="主界面"></el-button>
+        <el-button icon="el-icon-s-home" circle title="主界面" @click="renderingMain('mainpage')"></el-button>
       </el-tooltip>
       <el-badge :value="3" class="item">
         <el-button icon="el-icon-message" circle title="消息"></el-button>
@@ -25,6 +25,11 @@ export default {
         message: '退出成功！',
         type: 'success'
       })
+      /* 返回登录界面 */
+      this.$router.push('/')
+    },
+    renderingMain (c) {
+      this.$emit('rendering-main', c)
     }
   },
   computed: {
