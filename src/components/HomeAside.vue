@@ -41,7 +41,7 @@
           <span slot="title">联系我们</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="4-1">客服热线</el-menu-item>
+          <el-menu-item index="4-1" @click="barclick('customerservice')">客服热线</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>

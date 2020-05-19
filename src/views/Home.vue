@@ -19,6 +19,7 @@ import HomeToolBar from '../components/HomeToolBar'
 import HomeAside from '../components/HomeAside'
 import MainIndex from '../components/el-main/MainIndex'
 import MainPersonInfo from '../components/el-main/MainPersonInfo'
+import CustomerService from '../components/el-main/CustomerService'
 // 修改密码组件
 import MainChangePwd from '../components/el-main/MainChangePwd'
 const { ipcRenderer } = require('electron')
@@ -50,7 +51,8 @@ export default {
     sidebar: HomeAside,
     mainpage: MainIndex,
     info: MainPersonInfo,
-    changepwd: MainChangePwd
+    changepwd: MainChangePwd,
+    customerservice: CustomerService
   }
 }
 </script>
