@@ -5,13 +5,21 @@
       <el-tooltip content="主界面" placement="bottom" class="item_gutter">
         <el-button icon="el-icon-s-home" circle title="主界面" @click="renderingMain('mainpage')"></el-button>
       </el-tooltip>
-      <el-badge :value="3" class="item">
-        <el-button icon="el-icon-message" circle title="消息"></el-button>
+      <el-badge :value="1" class="item">
+        <el-button icon="el-icon-message" circle title="消息" @click="drawer = true"></el-button>
       </el-badge>
       <el-tooltip :content="currentDate" placement="bottom" class="item">
         <el-button icon="el-icon-timer" circle></el-button>
       </el-tooltip>
       <el-button icon="el-icon-switch-button" circle title="退出登录" class="item" @click="back"></el-button>
+      <el-drawer
+        :visible.sync="drawer"
+        :direction="direction"
+        :before-close="handleClose">
+        <!--用户手册编辑区-->
+        <h4>用户手册</h4>
+        <el-divider></el-divider>
+      </el-drawer>
     </el-row>
   </el-header>
 </template>
@@ -19,6 +27,12 @@
 <script>
 export default {
   name: 'HomeToolBar',
+  data () {
+    return {
+      drawer: false,
+      direction: 'rtl'
+    }
+  },
   methods: {
     back () {
       this.$message({
@@ -30,6 +44,14 @@ export default {
     },
     renderingMain (c) {
       this.$emit('rendering-main', c)
+    },
+    handleClose (done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {
+        })
     }
   },
   computed: {
