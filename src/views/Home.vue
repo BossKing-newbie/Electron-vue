@@ -22,6 +22,10 @@ import MainPersonInfo from '../components/el-main/MainPersonInfo'
 import CustomerService from '../components/el-main/CustomerService'
 // 修改密码组件
 import MainChangePwd from '../components/el-main/MainChangePwd'
+// 物流状态组件
+import orderTable from '../components/order/orderTable'
+// 历史订单组件
+import orderHistory from '../components/order/orderHistory'
 const { ipcRenderer } = require('electron')
 export default {
   name: 'Home',
@@ -52,7 +56,9 @@ export default {
     mainpage: MainIndex,
     info: MainPersonInfo,
     changepwd: MainChangePwd,
-    customerservice: CustomerService
+    customerservice: CustomerService,
+    logistics: orderTable,
+    historyorder: orderHistory
   }
 }
 </script>
