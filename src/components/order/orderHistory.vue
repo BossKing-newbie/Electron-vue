@@ -14,7 +14,7 @@ export default {
   .table
     box-shadow 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
     border-radius: 10px
-    width 550px
-    height 550px
-    margin-left 175px
+    width 650px
+    height 400px
+    margin-left 65px
 </style>
