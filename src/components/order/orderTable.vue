@@ -2,46 +2,66 @@
 <div class="table">
   <el-table
     :data="tableData"
-    border
-    style="width: 100%">
+    style="width: 100%"
+    max-height="400">
     <el-table-column
       fixed
-      prop="date"
-      label="日期"
+      prop="number"
+      label="订单编号"
       width="150">
     </el-table-column>
     <el-table-column
-      prop="name"
-      label="姓名"
-      width="120">
+      prop="id"
+      label="产品id"
+      width="100">
     </el-table-column>
     <el-table-column
-      prop="province"
-      label="省份"
-      width="120">
+      prop="date"
+      label="下单时间"
+      width="200">
     </el-table-column>
     <el-table-column
-      prop="city"
-      label="市区"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="地址"
+      prop="ship_address"
+      label="发货地址"
       width="300">
     </el-table-column>
     <el-table-column
-      prop="zip"
-      label="邮编"
+      prop="address"
+      label="收货地址"
+      width="300">
+    </el-table-column>
+    <el-table-column
+      prop="price"
+      label="价格"
+      width="100">
+    </el-table-column>
+    <el-table-column
+      prop="payment"
+      label="付款方式"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="status"
+      label="订单状态"
       width="120">
     </el-table-column>
     <el-table-column
       fixed="right"
       label="操作"
-      width="100">
+      width="130">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-        <el-button type="text" size="small">编辑</el-button>
+        <el-button
+          @click.native.prevent="deleteRow(scope.$index, tableData)"
+          type="text"
+          size="small">
+          确认收货
+        </el-button>
+        <el-button
+          @click.native.prevent="deleteRow(scope.$index, tableData)"
+          type="text"
+          size="small">
+          查看物流
+        </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -50,15 +70,88 @@
 
 <script>
 export default {
-  name: 'orderTable'
+  methods: {
+    deleteRow (index, rows) {
+      rows.splice(index, 1)
+    }
+  },
+  data () {
+    return {
+      tableData: [{
+        number: '20170060320',
+        id: '001',
+        date: '2020-6-02 16:09:57',
+        ship_address: '佛山市顺德区环市北路13号',
+        address: '上海市普陀区金沙江路 1518 弄',
+        price: 10,
+        payment: '支付宝',
+        status: '已发货'
+      }, {
+        number: '20170060320',
+        id: '001',
+        date: '2020-6-02 16:09:57',
+        ship_address: '佛山市顺德区环市北路13号',
+        address: '上海市普陀区金沙江路 1518 弄',
+        price: 10,
+        payment: '支付宝',
+        status: '已发货'
+      }, {
+        number: '20170060320',
+        id: '001',
+        date: '2020-6-02 16:09:57',
+        ship_address: '佛山市顺德区环市北路13号',
+        address: '上海市普陀区金沙江路 1518 弄',
+        price: 10,
+        payment: '支付宝',
+        status: '已发货'
+      }, {
+        number: '20170060320',
+        id: '001',
+        date: '2020-6-02 16:09:57',
+        ship_address: '佛山市顺德区环市北路13号',
+        address: '上海市普陀区金沙江路 1518 弄',
+        price: 10,
+        payment: '支付宝',
+        status: '已发货'
+      }, {
+        number: '20170060320',
+        id: '001',
+        date: '2020-6-02 16:09:57',
+        ship_address: '佛山市顺德区环市北路13号',
+        address: '上海市普陀区金沙江路 1518 弄',
+        price: 10,
+        payment: '支付宝',
+        status: '已发货'
+      }, {
+        number: '20170060320',
+        id: '001',
+        date: '2020-6-02 16:09:57',
+        ship_address: '佛山市顺德区环市北路13号',
+        address: '上海市普陀区金沙江路 1518 弄',
+        price: 10,
+        payment: '支付宝',
+        status: '已发货'
+      }, {
+        number: '20170060320',
+        id: '001',
+        date: '2020-6-02 16:09:57',
+        ship_address: '佛山市顺德区环市北路13号',
+        address: '上海市普陀区金沙江路 1518 弄',
+        price: 10,
+        payment: '支付宝',
+        status: '已发货'
+      }]
+    }
+  }
 }
 </script>
 
 <style lang="stylus" scoped>
   .table
     box-shadow 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
-    border-radius: 10px
-    width 550px
-    height 550px
-    margin-left 175px
+    border-radius 10px
+    width 650px
+    height 400px
+    margin-left 85px
+    margin-top 20px
 </style>
