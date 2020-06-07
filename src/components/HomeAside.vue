@@ -15,7 +15,7 @@
         <el-menu-item-group>
           <el-menu-item index="1-2" @click="barclick('info')">个人信息</el-menu-item>
           <el-menu-item index="1-3" @click="barclick('changepwd')">修改密码</el-menu-item>
-          <el-menu-item index="1-4" @click="barclick('changepwd')">修改手机</el-menu-item>
+          <el-menu-item index="1-4" @click="barclick('changephone')">修改手机</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="2">

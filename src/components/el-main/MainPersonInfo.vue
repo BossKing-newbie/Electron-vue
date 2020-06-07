@@ -31,8 +31,8 @@
         <el-form-item prop="detailAddress">
           <el-input placeholder="详细地址" prefix-icon="el-icon-location-information" clearable v-model="ruleForm.detailAddress"></el-input>
         </el-form-item>
-        <el-form-item prop="phone" inline-message="false">
-          <el-input placeholder="联系电话" prefix-icon="el-icon-phone-outline" clearable v-model="ruleForm.phone"></el-input>
+        <el-form-item inline-message="false">
+          <el-input placeholder="联系电话" prefix-icon="el-icon-phone-outline" v-model="ruleForm.phone" readonly></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')" round>确认修改</el-button>
@@ -64,20 +64,6 @@ export default {
         callback()
       }
     }
-    /* 验证手机号 */
-    const checkPhone = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('手机号不能为空'))
-      } else {
-        const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
-        console.log(reg.test(value))
-        if (reg.test(value)) {
-          callback()
-        } else {
-          return callback(new Error('请输入正确的手机号'))
-        }
-      }
-    }
     return {
       selectedOptions: [],
       options: regionData,
@@ -101,13 +87,6 @@ export default {
           {
             validator: validateAddress,
             trigger: 'blur'
-          }
-        ],
-        phone: [
-          {
-            validator: checkPhone,
-            trigger: 'blur',
-            required: true
           }
         ]
       }

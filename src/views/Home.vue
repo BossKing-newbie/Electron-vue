@@ -26,6 +26,8 @@ import MainChangePwd from '../components/el-main/MainChangePwd'
 import orderTable from '../components/order/orderTable'
 // 历史订单组件
 import orderHistory from '../components/order/orderHistory'
+// 修改手机号码获取验证码界面
+import ChangePhone from '../components/el-main/ChangePhone'
 const { ipcRenderer } = require('electron')
 export default {
   name: 'Home',
@@ -58,7 +60,8 @@ export default {
     changepwd: MainChangePwd,
     customerservice: CustomerService,
     logistics: orderTable,
-    historyorder: orderHistory
+    historyorder: orderHistory,
+    changephone: ChangePhone
   }
 }
 </script>
