@@ -4,7 +4,7 @@
         <el-row>
           <el-col :span="2">
             <el-card shadow="hover" class="one" :body-style="{ padding: '10px' }">
-              <img src="https://s1.ax1x.com/2020/05/20/Y7BY9K.png" class="image">
+              <img src="https://s1.ax1x.com/2020/06/13/tvPT0I.jpg" class="image">
               <div class="name1">
                 <span>纪佳金</span>
               </div>
@@ -50,7 +50,7 @@
           </el-col>
           <el-col :span="3">
             <el-card shadow="hover" class="five" :body-style="{ padding: '10px' }">
-              <img src="https://s1.ax1x.com/2020/05/20/Y7BNcD.png" class="image">
+              <img src="https://s1.ax1x.com/2020/06/13/tvP77t.jpg" class="image">
               <div class="name5">
                 <span>郑嘉雯</span>
               </div>

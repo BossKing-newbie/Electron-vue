@@ -4,12 +4,6 @@
       <el-carousel-item v-for="item in items" :key="item">
         <el-card :body-style="{ padding: '0px' }">
           <img :src="item" class="image">
-          <div style="padding: 14px;text-align: left">
-            <span style="font-size: 40px">快递服务</span>
-            <div>
-              <time class="time">{{tag}}</time>
-            </div>
-          </div>
         </el-card>
       </el-carousel-item>
     </el-carousel>
@@ -21,9 +15,9 @@ export default {
   name: 'MainIndex',
   data () {
     return {
-      items: ['https://www.sf-express.com/.gallery/index/PCkuaidifuwu-0213.jpg',
-        'https://www.sf-express.com/.gallery/index/lengyunbusiness-img2.jpg',
-        'https://www.sf-express.com/cn/sc/download/medicine.jpg'],
+      items: ['https://s1.ax1x.com/2020/06/07/t25wK1.jpg',
+        'https://s1.ax1x.com/2020/06/07/tRGVPJ.jpg',
+        'https://s1.ax1x.com/2020/06/07/tRGZG9.jpg'],
       tag: new Date()
     }
   }
