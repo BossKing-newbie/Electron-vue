@@ -3,12 +3,12 @@
     <div class="info">
       <el-upload
         class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="http://localhost:8081/userInfo/upload"
+        :http-request="upload"
         :show-file-list="false"
-        :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload">
         <div slot="tip" class="el-upload__tip">用户头像只能上传jpg/png文件，且不超过500kb</div>
-        <el-avatar v-if="ruleForm.imageUrl" :src="ruleForm.imageUrl" fit="contain" :size="60"
+        <el-avatar :key="ruleForm.imageUrl" :src="ruleForm.imageUrl" fit="contain" :size="60"
                    style="margin-top:15px"></el-avatar>
       </el-upload>
       <el-divider></el-divider>
@@ -31,9 +31,6 @@
         <el-form-item prop="detailAddress">
           <el-input placeholder="详细地址" prefix-icon="el-icon-location-information" clearable v-model="ruleForm.detailAddress"></el-input>
         </el-form-item>
-        <el-form-item prop="phone" inline-message="false">
-          <el-input placeholder="联系电话" prefix-icon="el-icon-phone-outline" clearable v-model="ruleForm.phone"></el-input>
-        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')" round>确认修改</el-button>
         </el-form-item>
@@ -44,7 +41,6 @@
 
 <script>
 import { regionData, CodeToText } from 'element-china-area-data'
-
 export default {
   name: 'MainPersonInfo',
   data () {
@@ -65,7 +61,7 @@ export default {
       }
     }
     /* 验证手机号 */
-    const checkPhone = (rule, value, callback) => {
+    /* const checkPhone = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('手机号不能为空'))
       } else {
@@ -77,18 +73,16 @@ export default {
           return callback(new Error('请输入正确的手机号'))
         }
       }
-    }
+    } */
     return {
       selectedOptions: [],
       options: regionData,
       ruleForm: {
-        phone: '',
         username: '',
-        sex: 'man',
-        address: '',
+        sex: 'woman',
+        address: [],
         detailAddress: '',
-        imageUrl: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
-        relaName: ''
+        imageUrl: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
       },
       rules: {
         username: [
@@ -102,71 +96,122 @@ export default {
             validator: validateAddress,
             trigger: 'blur'
           }
-        ],
-        phone: [
+        ]
+        /* phone: [
           {
             validator: checkPhone,
             trigger: 'blur',
             required: true
           }
-        ]
+        ] */
       }
     }
   },
+  mounted () {
+    this.getUserInfo()
+  },
   methods: {
-    /* 头像处理逻辑 */
-    handleAvatarSuccess (res, file) {
-      const reader = new FileReader()
+    /* 自定义上传函数 */
+    upload (file) {
       // 定义当前指针域
       const _this = this
-      reader.readAsDataURL(file.raw) // 读出 base64
-      if (res) {
-        this.$message({
-          message: '上传成功！',
-          type: 'success'
-        })
-      }
-      reader.onloadend = function () {
-        // eslint-disable-next-line no-const-assign
-        _this.ruleForm.imageUrl = reader.result
-        // console.log(_this.ruleForm.imageUrl)
-        _this.$emit('update-avatar', _this.ruleForm.imageUrl)
-      }
+      const formData = new FormData()
+      formData.append('avatar', file.file)
+      formData.append('avatarName', '20170060309')
+      console.log(formData)
+      this.axios({
+        method: 'post',
+        url: 'http://localhost:8081/userInfo/upload',
+        data: formData
+      }).then(function (response) {
+        console.log(response.data)
+        if (response.data.code === 200) {
+          _this.$message({
+            message: '上传成功！',
+            type: 'success'
+          })
+          _this.ruleForm.imageUrl = response.data.data.imageUrl
+          console.log(response.data.data.imageUrl)
+          // console.log(_this.ruleForm.imageUrl)
+          _this.$emit('update-avatar', _this.ruleForm.imageUrl)
+        }
+      })
     },
+    /* 头像处理逻辑 */
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 2
-
+      let isUpload = false
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M
+      this.$confirm('是否上传该文件!, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // eslint-disable-next-line no-const-assign
+        isUpload = true
+      }).catch(() => {
+        isUpload = false
+      })
+      return isJPG && isLt2M && isUpload
     },
+    /* 级联选择器的变换函数 */
     handleChange () {
-      console.log(this.selectedOptions)
       for (let i = 0; i < this.selectedOptions.length; i++) {
-        this.ruleForm.address += CodeToText[this.selectedOptions[i]] + '-'
+        this.ruleForm.address[i] = (CodeToText[this.selectedOptions[i]])
       }
     },
+    /* 表单提交操作 */
     submitForm (formName) {
+      // 定义当前指针域
       const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          /* 字符串拼接 */
+          this.ruleForm.detailAddress = this.ruleForm.address.join('-') + '/' + this.ruleForm.detailAddress
+          console.log(this.ruleForm.detailAddress)
+          this.$refs[formName].resetFields()
+          _this.selectedOptions = []
           _this.$notify({
             title: '成功',
             message: '修改个人信息成功！',
             type: 'success'
           })
-          /* 字符串拼接 */
-          this.ruleForm.detailAddress = this.ruleForm.address + this.ruleForm.detailAddress
-          this.$refs[formName].resetFields()
-          _this.selectedOptions = []
+          _this.getUserInfo()
         } else {
           console.log('error submit!!')
           return false
+        }
+      })
+    },
+    /* 获取用户信息的get请求 */
+    getUserInfo () {
+      // 定义当前指针域
+      const _this = this
+      this.axios({
+        method: 'get',
+        url: 'http://localhost:8081/userInfo/724574109'
+      }).then(function (response) {
+        console.log(response.data.data)
+        _this.ruleForm.sex = response.data.data.userSex
+        if (response.data.data.userName) {
+          _this.ruleForm.username = response.data.data.userName
+        }
+        if (response.data.data.userAvatar) {
+          _this.ruleForm.imageUrl = response.data.data.userAvatar
+          _this.$emit('update-avatar', _this.ruleForm.imageUrl)
+        }
+        if (response.data.data.userAddress) {
+          _this.ruleForm.detailAddress = response.data.data.userAddress
+        }
+        if (response.data.data.userProvince) {
+          _this.selectedOptions = response.data.data.userProvince.split('-')
+          _this.handleChange()
         }
       })
     }

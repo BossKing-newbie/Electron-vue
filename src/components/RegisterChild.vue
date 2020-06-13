@@ -1,11 +1,7 @@
 <template>
   <div class="main">
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
-      <el-form-item label="您的性别:">
-        <el-radio v-model="ruleForm.userSex" label="man">男</el-radio>
-        <el-radio v-model="ruleForm.userSex" label="woman">女</el-radio>
-      </el-form-item>
-      <el-form-item prop="userId">
+      <el-form-item prop="userId" style="margin-top:15px">
         <el-input placeholder="请输入账号" v-model="ruleForm.userId" clearable prefix-icon="el-icon-user"></el-input>
       </el-form-item>
       <el-form-item prop="userPassword">
@@ -66,8 +62,8 @@ export default {
           url: 'http://localhost:8081/user/' + value
         }).then(function (response) {
           code = parseInt(response.data.code)
-          console.log(code)
-          if (code === 110) {
+          /* 200即成功，意思就是允许注册 */
+          if (code === 200) {
             callback()
           } else {
             callback(new Error('该用户已存在'))
@@ -94,8 +90,7 @@ export default {
         userPassword: '',
         checkPass: '',
         userPhone: '',
-        userId: '',
-        userSex: 'man'
+        userId: ''
       },
       rules: {
         userId: [
@@ -121,7 +116,7 @@ export default {
         userDescribe: '普通会员',
         userPhone: this.ruleForm.userPhone,
         userId: this.ruleForm.userId,
-        userSex: this.ruleForm.userSex
+        userIntegral: 0
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -138,6 +133,7 @@ export default {
             type: 'success',
             center: true
           })
+          this.$refs[formName].resetFields()
         } else {
           console.log('error submit!!')
           return false
