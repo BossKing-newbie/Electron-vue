@@ -109,9 +109,6 @@ export default {
         }
       })
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
-    },
     login () {
       this.$emit('register', 'login', '用户登录')
     }

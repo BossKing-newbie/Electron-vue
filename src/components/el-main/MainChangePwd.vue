@@ -87,10 +87,10 @@ export default {
 <style lang="stylus" scoped>
   .info
     box-shadow 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
-    border-radius: 10px
-    width 350px
-    height 300px
-    margin-left 175px
+    border-radius 10px
+    width 650px
+    height 400px
+    margin-left 65px
   .el-form
     margin-right 50px
 </style>
