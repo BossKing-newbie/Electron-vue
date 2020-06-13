@@ -7,11 +7,11 @@
         :http-request="upload"
         :show-file-list="false"
         :before-upload="beforeAvatarUpload">
-        <div slot="tip" class="el-upload__tip">用户头像只能上传jpg/png文件，且不超过500kb</div>
-        <el-avatar :key="ruleForm.imageUrl" :src="ruleForm.imageUrl" fit="contain" :size="60"
-                   style="margin-top:15px"></el-avatar>
+        <div slot="tip" class="el-upload__tip">用户头像只能上传jpg/png文件</div>
+        <div slot="tip" class="el-upload__tip">且不超过500kb</div>
+        <el-avatar v-if="ruleForm.imageUrl" :src="ruleForm.imageUrl" fit="contain" :size="60"></el-avatar>
       </el-upload>
-      <el-divider></el-divider>
+      <el-divider direction="vertical"></el-divider>
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
         <el-form-item>
           <el-radio v-model="ruleForm.sex" label="man">男</el-radio>
@@ -60,20 +60,6 @@ export default {
         callback()
       }
     }
-    /* 验证手机号 */
-    /* const checkPhone = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('手机号不能为空'))
-      } else {
-        const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
-        console.log(reg.test(value))
-        if (reg.test(value)) {
-          callback()
-        } else {
-          return callback(new Error('请输入正确的手机号'))
-        }
-      }
-    } */
     return {
       selectedOptions: [],
       options: regionData,
@@ -97,13 +83,6 @@ export default {
             trigger: 'blur'
           }
         ]
-        /* phone: [
-          {
-            validator: checkPhone,
-            trigger: 'blur',
-            required: true
-          }
-        ] */
       }
     }
   },
@@ -220,18 +199,24 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  .avatar
-    width 100px
-    height 100px
-    display block
-
+  .el-avatar
+    margin-top:100px
+    margin-left -450px
   .info
     box-shadow 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
-    border-radius: 10px
-    width 350px
-    height 550px
-    margin-left 175px
+    border-radius 10px
+    width 650px
+    height 400px
+    margin-left 65px
   .el-form
-    margin-left 50px
-    margin-right 50px
+    margin-top -340px
+    margin-left 300px
+    margin-right 100px
+  .el-divider
+    height 330px
+    margin-top -200px
+    margin-left -220px
+  .el-upload__tip
+    margin-left -450px
+    margin-top 20px
 </style>
