@@ -126,12 +126,13 @@ export default {
             url: 'http://localhost:8081/user/register',
             data: Qs.stringify(formData)
           }).then(function (response) {
-            console.log(response)
-          })
-          this.$message({
-            message: '恭喜你，注册成功！',
-            type: 'success',
-            center: true
+            if (response.data.code === 200) {
+              _this.$message({
+                message: '恭喜你，注册成功！',
+                type: 'success',
+                center: true
+              })
+            }
           })
           this.$refs[formName].resetFields()
         } else {

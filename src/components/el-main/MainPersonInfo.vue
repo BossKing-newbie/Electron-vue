@@ -122,24 +122,13 @@ export default {
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 2
-      let isUpload = false
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      this.$confirm('是否上传该文件!, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        // eslint-disable-next-line no-const-assign
-        isUpload = true
-      }).catch(() => {
-        isUpload = false
-      })
-      return isJPG && isLt2M && isUpload
+      return isJPG && isLt2M
     },
     /* 级联选择器的变换函数 */
     handleChange () {
@@ -151,19 +140,38 @@ export default {
     submitForm (formName) {
       // 定义当前指针域
       const _this = this
+      const data = Qs.parse(sessionStorage.getItem('user'))
       this.$refs[formName].validate((valid) => {
         if (valid) {
           /* 字符串拼接 */
           this.ruleForm.detailAddress = this.ruleForm.address.join('-') + '/' + this.ruleForm.detailAddress
           console.log(this.ruleForm.detailAddress)
-          this.$refs[formName].resetFields()
-          _this.selectedOptions = []
-          _this.$notify({
-            title: '成功',
-            message: '修改个人信息成功！',
-            type: 'success'
+          // eslint-disable-next-line no-const-assign
+          const formData = {
+            userId: data.userId,
+            userName: _this.ruleForm.username,
+            userSex: _this.ruleForm.sex,
+            userAddress: _this.ruleForm.detailAddress,
+            userAvatar: _this.ruleForm.imageUrl,
+            userProvince: _this.selectedOptions.join('-')
+          }
+          // 发送axios请求
+          this.axios({
+            method: 'post',
+            url: 'http://localhost:8081/userInfo/update',
+            data: Qs.stringify(formData)
+          }).then(function (response) {
+            if (response.data.code === 200) {
+              _this.$notify({
+                title: '成功',
+                message: '修改个人信息成功！',
+                type: 'success'
+              })
+              _this.getUserInfo()
+            }
           })
-          _this.getUserInfo()
+          /* this.$refs[formName].resetFields()
+          _this.selectedOptions = [] */
         } else {
           console.log('error submit!!')
           return false
@@ -180,6 +188,7 @@ export default {
         method: 'get',
         url: 'http://localhost:8081/userInfo/' + data.userId
       }).then(function (response) {
+        console.log(response)
         if (response.data.data.userSex) {
           _this.ruleForm.sex = response.data.data.userSex
         }
@@ -191,7 +200,7 @@ export default {
           _this.$emit('update-avatar', _this.ruleForm.imageUrl)
         }
         if (response.data.data.userAddress) {
-          _this.ruleForm.detailAddress = response.data.data.userAddress
+          _this.ruleForm.detailAddress = response.data.data.userAddress.split('/')[1]
         }
         if (response.data.data.userProvince) {
           _this.selectedOptions = response.data.data.userProvince.split('-')
