@@ -41,6 +41,8 @@
 
 <script>
 import { regionData, CodeToText } from 'element-china-area-data'
+// 引入vue字符串序列化对象
+import Qs from 'qs'
 export default {
   name: 'MainPersonInfo',
   data () {
@@ -172,12 +174,15 @@ export default {
     getUserInfo () {
       // 定义当前指针域
       const _this = this
+      // 从sessionStorage中获取登录后返回的用户信息
+      const data = Qs.parse(sessionStorage.getItem('user'))
       this.axios({
         method: 'get',
-        url: 'http://localhost:8081/userInfo/724574109'
+        url: 'http://localhost:8081/userInfo/' + data.userId
       }).then(function (response) {
-        console.log(response.data.data)
-        _this.ruleForm.sex = response.data.data.userSex
+        if (response.data.data.userSex) {
+          _this.ruleForm.sex = response.data.data.userSex
+        }
         if (response.data.data.userName) {
           _this.ruleForm.username = response.data.data.userName
         }

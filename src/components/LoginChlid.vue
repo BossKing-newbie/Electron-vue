@@ -11,7 +11,7 @@
         <el-input type="password" placeholder="请输入密码" v-model="ruleForm.pass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" round @click="login">登录</el-button>
+        <el-button type="primary" round @click="submitForm('ruleForm')">登录</el-button>
       </el-form-item>
       <el-form-item>
         <el-button type="info" round @click="register">用户注册</el-button>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import Qs from 'qs'
 export default {
   name: 'Login',
   data () {
@@ -33,7 +34,7 @@ export default {
         callback()
       }
     }
-    var validatePass = (rule, value, callback) => {
+    const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
       } else {
@@ -60,26 +61,33 @@ export default {
   },
   methods: {
     submitForm (formName) {
+      const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.axios({
+            method: 'post',
+            url: 'http://localhost:8081/user/login',
+            data: Qs.stringify(this.ruleForm)
+          }).then(function (response) {
+            if (response.data.code === 200) {
+              _this.$message({
+                message: '欢迎您，用户' + response.data.data.userId,
+                type: 'success',
+                center: true
+              })
+              // 将用户信息存入sessionStorage
+              sessionStorage.setItem('user', Qs.stringify(response.data.data))
+              _this.$router.push('Home')
+            } else {
+              _this.$message.error('用户名或密码错误')
+            }
+            console.log(response)
+          })
         } else {
           console.log('error submit!!')
           return false
         }
       })
-    },
-    login () {
-      if (this.ruleForm.account === 'admin' && this.ruleForm.pass === '123456') {
-        this.$message({
-          showClose: true,
-          message: '登录成功！欢迎您，admin',
-          type: 'success'
-        })
-        this.$router.push('Home')
-      } else {
-        this.$message.error('用户名或密码错误')
-      }
     },
     register () {
       this.$emit('register', 'register', '用户注册')

@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     back () {
+      sessionStorage.clear()
       this.$message({
         message: '退出成功！',
         type: 'success'
