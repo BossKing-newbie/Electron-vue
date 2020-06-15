@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import Qs from 'qs'
 export default {
   name: 'MainChangePwd',
   data () {
@@ -91,9 +92,37 @@ export default {
   },
   methods: {
     submitForm (formName) {
+      // 定义当前指针域
+      const _this = this
+      // 获取session的用户信息
+      const sessionData = Qs.parse(sessionStorage.getItem('user'))
+      // 定义表单提交数据
+      const formData = {
+        userId: sessionData.userId,
+        oldPassword: this.ruleForm.oldPass,
+        newPassword: this.ruleForm.pass
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.axios({
+            method: 'post',
+            url: 'http://localhost:8081/user/update_pwd',
+            data: Qs.stringify(formData)
+          }).then(function (response) {
+            if (response.data.code === 200) {
+              _this.$message({
+                message: '密码修改成功!请重新登录!',
+                type: 'success',
+                center: true
+              })
+              /* 返回登录界面 */
+              _this.$router.push('/')
+            } else if (response.data.code === 500) {
+              _this.$message.error('密码错误')
+            } else {
+              _this.$message.error('服务器更新失败!')
+            }
+          })
         } else {
           console.log('error submit!!')
           return false

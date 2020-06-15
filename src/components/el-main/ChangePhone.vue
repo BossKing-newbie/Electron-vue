@@ -10,7 +10,8 @@
       </el-form-item>
       <el-form-item label="验证码" prop="number">
         <el-input type="text" placeholder="请输入验证码" v-model="ruleForm.number" prefix-icon="el-icon-mobile">
-          <el-button slot="append">获取验证码</el-button>
+          <el-button v-show="Verification" slot="append" @click="getCaptcha">{{CaptchaText}}</el-button>
+          <el-button v-show="!Verification" slot="append" disabled><span>{{timer}}秒后重新获取</span></el-button>
         </el-input>
       </el-form-item>
       <el-form-item>
@@ -67,7 +68,10 @@ export default {
             required: true
           }
         ]
-      }
+      },
+      Verification: true, // 设置两个按钮谁显示
+      timer: 60, // 定义1分钟内重新获取
+      CaptchaText: '获取验证码'
     }
   },
   methods: {
@@ -83,6 +87,20 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    // 获取验证码的按钮操作
+    getCaptcha () {
+      this.Verification = !this.Verification
+      // eslint-disable-next-line camelcase
+      const auth_timer = setInterval(() => { // 定时器设置每秒递减
+        this.timer-- // 递减时间
+        if (this.timer <= 0) {
+          this.Verification = !this.Verification // 60s时间结束还原v-show状态并清除定时器
+          this.CaptchaText = '重新获取验证码'
+          clearInterval(auth_timer)
+        }
+      }, 1000)
+      this.timer = 60
     }
   }
 }
