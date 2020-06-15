@@ -1,7 +1,7 @@
 <template>
   <el-aside width="200px">
     <el-avatar :size="60" :src="imageUrl"
-               style="cursor: pointer"></el-avatar>
+               style="cursor: pointer;margin-bottom: 20px"></el-avatar>
     <el-menu
       default-active="1-1"
       class="el-menu-vertical-demo"
@@ -29,7 +29,7 @@
       </el-submenu>
       <el-submenu index="3">
         <template slot="title">
-          <i class="el-icon-tickets"></i>
+          <i class="el-icon-document-copy"></i>
           <span slot="title">订单管理</span>
         </template>
         <el-menu-item-group v-for="(value, index) in orderArray" :key="index">
@@ -38,7 +38,7 @@
       </el-submenu>
       <el-submenu index="4">
         <template slot="title">
-          <i class="el-icon-mobile-phone"></i>
+          <i class="el-icon-phone"></i>
           <span slot="title">联系我们</span>
         </template>
         <el-menu-item-group>

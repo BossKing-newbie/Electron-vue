@@ -31,7 +31,7 @@ export default {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入旧密码'))
-      } else {
+      } else { // 把下面改成 判断是否与数据库里的一致
         if (this.ruleForm.checkPass !== '') {
           this.$refs.ruleForm.validateField('checkPass')
         }

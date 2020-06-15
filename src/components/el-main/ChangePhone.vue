@@ -5,6 +5,9 @@
       <h2 style="margin-top: 40px;font-family: 'Hiragino Sans GB';color: cornflowerblue">修 改 手 机 <i class="el-icon-mobile-phone"></i></h2>
     </el-row>
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="旧手机号" prop="oldPhone">
+        <el-input type="text" placeholder="请输入旧手机号" v-model="ruleForm.oldPhone" autocomplete="off" prefix-icon="el-icon-phone"></el-input>
+      </el-form-item>
       <el-form-item label="新手机号" prop="phone">
         <el-input type="text" placeholder="请输入新手机号" v-model="ruleForm.phone" prefix-icon="el-icon-phone-outline"></el-input>
       </el-form-item>
@@ -118,8 +121,8 @@ export default {
   .el-form
     margin-right 110px
     margin-left 50px
-    margin-top 50px
+    margin-top 20px
   .el-button
-    margin-top 50px
+    margin-top 20px
     margin-left -50px
 </style>
