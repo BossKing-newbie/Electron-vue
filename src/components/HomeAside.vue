@@ -13,7 +13,7 @@
           <span>个人信息</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-2" @click="barclick('info')">个人信息</el-menu-item>
+          <el-menu-item index="1-2" @click="barclick('info')">我的信息</el-menu-item>
           <el-menu-item index="1-3" @click="barclick('changepwd')">修改密码</el-menu-item>
           <el-menu-item index="1-4" @click="barclick('changephone')">修改手机</el-menu-item>
         </el-menu-item-group>
@@ -24,7 +24,7 @@
           <span slot="title">客户服务</span>
         </template>
         <el-menu-item-group v-for="(value, index) in customerArray" :key="index">
-          <el-menu-item :index="value.index">{{value.title}}</el-menu-item>
+          <el-menu-item :index="value.index" @click="barclick(value.order)">{{value.title}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="3">
@@ -54,7 +54,7 @@ export default {
   name: 'HomeAside',
   data () {
     return {
-      customerArray: [{ title: '当天达', index: '2-1' }, { title: '次日达', index: '2-2' }, { title: '72小时达', index: '2-3' }],
+      customerArray: [{ title: '当天达', index: '2-1', order: 'sameday' }, { title: '次日达', index: '2-2', order: 'next' }, { title: '72小时达', index: '2-3', order: 'seventy' }],
       orderArray: [{ title: '物流状态', index: '3-1', order: 'logistics' }, { title: '历史订单', index: '3-2', order: 'historyorder' }]
     }
   },

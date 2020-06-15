@@ -1,19 +1,22 @@
 <template>
   <el-main>
     <div class="info">
-      <el-row style="margin-bottom: 15px;text-align: center">
-        <h3>修改密码</h3>
+      <el-row>
+        <h2 style="margin-top: 40px;font-family: 'Hiragino Sans GB';color: cornflowerblue">修 改 密 码 <i class="el-icon-unlock"></i></h2>
       </el-row>
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+        <el-form-item label="旧密码" prop="oldPass">
+          <el-input type="password" placeholder="请输入旧密码" v-model="ruleForm.oldPass" autocomplete="off" prefix-icon="el-icon-unlock"></el-input>
+        </el-form-item>
+        <el-form-item label="新密码" prop="pass">
+          <el-input type="password" placeholder="请输入新密码" v-model="ruleForm.pass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+          <el-input type="password" placeholder="请再次输入新密码" v-model="ruleForm.checkPass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button style="margin-right: 100px" type="primary" @click="submitForm('ruleForm')" round>提交</el-button>
+          <el-button @click="resetForm('ruleForm')" round>重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -26,7 +29,19 @@ export default {
   data () {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'))
+        callback(new Error('请输入旧密码'))
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('checkPass')
+        }
+        callback()
+      }
+    }
+    const validatePass1 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入新密码'))
+      } else if (value === this.ruleForm.oldPass) {
+        callback(new Error('新密码不能与旧密码相同!'))
       } else {
         if (this.ruleForm.checkPass !== '') {
           this.$refs.ruleForm.validateField('checkPass')
@@ -36,7 +51,7 @@ export default {
     }
     const validatePass2 = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请再次输入密码'))
+        callback(new Error('请再次输入新密码'))
       } else if (value !== this.ruleForm.pass) {
         callback(new Error('两次输入密码不一致!'))
       } else {
@@ -45,13 +60,21 @@ export default {
     }
     return {
       ruleForm: {
+        oldPass: '',
         pass: '',
         checkPass: ''
       },
       rules: {
-        pass: [
+        oldPass: [
           {
             validator: validatePass,
+            trigger: 'blur',
+            required: true
+          }
+        ],
+        pass: [
+          {
+            validator: validatePass1,
             trigger: 'blur',
             required: true
           }
@@ -82,6 +105,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style lang="stylus" scoped>
@@ -92,5 +116,10 @@ export default {
     height 400px
     margin-left 65px
   .el-form
-    margin-right 50px
+    margin-right 110px
+    margin-left 50px
+    margin-top 20px
+  .el-button
+    margin-top 20px
+    margin-left -50px
 </style>

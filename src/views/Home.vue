@@ -28,6 +28,12 @@ import orderTable from '../components/order/orderTable'
 import orderHistory from '../components/order/orderHistory'
 // 修改手机号码获取验证码界面
 import ChangePhone from '../components/el-main/ChangePhone'
+// 当日达
+import SameDay from '../components/customer/SameDay'
+// 次日达
+import TheNextDay from '../components/customer/TheNextDay'
+// 72小时达
+import SeventyTwo from '../components/customer/SeventyTwo'
 const { ipcRenderer } = require('electron')
 export default {
   name: 'Home',
@@ -61,7 +67,10 @@ export default {
     customerservice: CustomerService,
     logistics: orderTable,
     historyorder: orderHistory,
-    changephone: ChangePhone
+    changephone: ChangePhone,
+    sameday: SameDay,
+    next: TheNextDay,
+    seventy: SeventyTwo
   }
 }
 </script>

@@ -19,7 +19,7 @@
         </el-form-item>
         <el-form-item prop="username" style="text-align: center">
           <el-row>
-            <el-input placeholder="用户昵称" prefix-icon="el-icon-search" clearable v-model="ruleForm.username"></el-input>
+            <el-input placeholder="用户昵称" prefix-icon="el-icon-user" clearable v-model="ruleForm.username"></el-input>
           </el-row>
         </el-form-item>
         <el-form-item>
@@ -223,11 +223,11 @@ export default {
     height 400px
     margin-left 65px
   .el-form
-    margin-top -340px
+    margin-top -310px
     margin-left 300px
     margin-right 100px
   .el-divider
-    height 330px
+    height 320px
     margin-top -200px
     margin-left -220px
   .el-upload__tip
