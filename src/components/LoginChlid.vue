@@ -67,7 +67,11 @@ export default {
           this.axios({
             method: 'post',
             url: 'http://localhost:8081/user/login',
-            data: Qs.stringify(this.ruleForm)
+            data: Qs.stringify(this.ruleForm),
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            withCredentials: true
           }).then(function (response) {
             if (response.data.code === 200) {
               _this.$message({

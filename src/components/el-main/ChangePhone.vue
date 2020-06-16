@@ -5,8 +5,8 @@
       <h2 style="margin-top: 40px;font-family: 'Hiragino Sans GB';color: cornflowerblue">修 改 手 机 <i class="el-icon-mobile-phone"></i></h2>
     </el-row>
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="旧手机号" prop="oldPhone">
-        <el-input type="text" placeholder="请输入旧手机号" v-model="ruleForm.oldPhone" autocomplete="off" prefix-icon="el-icon-phone"></el-input>
+      <el-form-item label="旧手机号">
+        <el-input type="text" placeholder="请输入旧手机号" v-model="ruleForm.oldPhone" autocomplete="off" prefix-icon="el-icon-phone" readonly></el-input>
       </el-form-item>
       <el-form-item label="新手机号" prop="phone">
         <el-input type="text" placeholder="请输入新手机号" v-model="ruleForm.phone" prefix-icon="el-icon-phone-outline"></el-input>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+// 引入vue字符串序列化对象
+import Qs from 'qs'
 export default {
   name: 'ChangePhone',
   data () {
@@ -45,14 +47,13 @@ export default {
     const validateNumber = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入验证码'))
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error('两次输入密码不一致!'))
       } else {
         callback()
       }
     }
     return {
       ruleForm: {
+        oldPhone: '',
         phone: '',
         number: ''
       },
@@ -77,11 +78,49 @@ export default {
       CaptchaText: '获取验证码'
     }
   },
+  mounted () {
+    this.getOldPhone()
+  },
   methods: {
     submitForm (formName) {
+      // 定义当前指针域
+      const _this = this
+      // 从sessionStorage中获取登录后返回的用户信息
+      const data = Qs.parse(sessionStorage.getItem('user'))
+      // 设置提交表单的属性
+      const formData = {
+        userId: data.userId,
+        newPhone: this.ruleForm.phone,
+        randomCode: this.ruleForm.number
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.axios({
+            method: 'post',
+            url: 'http://localhost:8081/user/receive_sms',
+            data: Qs.stringify(formData),
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            withCredentials: true
+          }).then(function (response) {
+            console.log(response.data)
+            if (response.data.code === 200) {
+              _this.$message({
+                message: '恭喜你，修改手机号成功！',
+                type: 'success',
+                center: true
+              })
+              _this.$refs[formName].resetFields()
+              _this.getOldPhone()
+            } else {
+              _this.$message({
+                message: '修改手机号失败！',
+                type: 'error',
+                center: true
+              })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -93,7 +132,34 @@ export default {
     },
     // 获取验证码的按钮操作
     getCaptcha () {
+      // 定义当前指针域
+      const _this = this
       this.Verification = !this.Verification
+      const formData = {
+        newPhone: this.ruleForm.phone
+      }
+      this.axios({
+        method: 'post',
+        url: 'http://localhost:8081/user/send_sms',
+        data: Qs.stringify(formData),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(function (response) {
+        if (response.data.code === 200) {
+          _this.$message({
+            message: '验证码已发送！',
+            type: 'success',
+            center: true
+          })
+        } else {
+          _this.$message({
+            message: '验证码发送失败！',
+            type: 'error',
+            center: true
+          })
+        }
+      })
       // eslint-disable-next-line camelcase
       const auth_timer = setInterval(() => { // 定时器设置每秒递减
         this.timer-- // 递减时间
@@ -104,6 +170,20 @@ export default {
         }
       }, 1000)
       this.timer = 60
+    },
+    getOldPhone () {
+      // 定义当前指针域
+      const _this = this
+      // 从sessionStorage中获取登录后返回的用户信息
+      const data = Qs.parse(sessionStorage.getItem('user'))
+      this.axios({
+        method: 'get',
+        url: 'http://localhost:8081/user/check_phone/' + data.userId
+      }).then(function (response) {
+        if (response.data.code === 200) {
+          _this.ruleForm.oldPhone = response.data.data.userPhone
+        }
+      })
     }
   }
 }

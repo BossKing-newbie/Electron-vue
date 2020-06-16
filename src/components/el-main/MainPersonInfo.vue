@@ -103,7 +103,10 @@ export default {
       this.axios({
         method: 'post',
         url: 'http://localhost:8081/userInfo/upload',
-        data: formData
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       }).then(function (response) {
         console.log(response.data)
         if (response.data.code === 200) {
@@ -159,7 +162,10 @@ export default {
           this.axios({
             method: 'post',
             url: 'http://localhost:8081/userInfo/update',
-            data: Qs.stringify(formData)
+            data: Qs.stringify(formData),
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
           }).then(function (response) {
             if (response.data.code === 200) {
               _this.$notify({

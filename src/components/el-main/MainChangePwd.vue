@@ -107,7 +107,10 @@ export default {
           this.axios({
             method: 'post',
             url: 'http://localhost:8081/user/update_pwd',
-            data: Qs.stringify(formData)
+            data: Qs.stringify(formData),
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
           }).then(function (response) {
             if (response.data.code === 200) {
               _this.$message({

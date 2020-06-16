@@ -10,6 +10,8 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 Vue.use(Element)
+// 让axios携带cookie信息
+axios.defaults.withCredentials = true
 new Vue({
   router,
   store,
