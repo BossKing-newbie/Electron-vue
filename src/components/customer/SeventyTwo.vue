@@ -1,12 +1,26 @@
 <template>
   <div class="seventytwo">
-    72小时
+  <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tab-pane label="寄件人信息" name="first">寄件人信息</el-tab-pane>
+    <el-tab-pane label="收件人信息" name="second" disabled=true>收件人信息</el-tab-pane>
+    <el-tab-pane label="物品信息" name="third" disabled=true>物品信息</el-tab-pane>
+    <el-tab-pane label="估价" name="fourth" disabled=true>估价</el-tab-pane>
+  </el-tabs>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SeventyTwo'
+  data () {
+    return {
+      activeName: 'first'
+    }
+  },
+  methods: {
+    handleClick (tab, event) {
+      console.log(tab, event)
+    }
+  }
 }
 </script>
 

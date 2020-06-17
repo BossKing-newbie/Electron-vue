@@ -1,12 +1,32 @@
 <template>
-  <div class="sameday">
-    当日
-  </div>
+
 </template>
 
 <script>
 export default {
-  name: 'SameDay'
+  data () {
+    return {
+      activeName: 'first',
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      }
+    }
+  },
+  methods: {
+    handleClick (tab, event) {
+      console.log(tab, event)
+    },
+    onSubmit () {
+      console.log('submit!')
+    }
+  }
 }
 </script>
 
