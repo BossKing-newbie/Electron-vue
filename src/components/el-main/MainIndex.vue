@@ -15,7 +15,7 @@ export default {
   name: 'MainIndex',
   data () {
     return {
-      items: ['https://s1.ax1x.com/2020/06/07/t25wK1.jpg',
+      items: ['https://s1.ax1x.com/2020/06/16/NFIVyR.jpg',
         'https://s1.ax1x.com/2020/06/07/tRGVPJ.jpg',
         'https://s1.ax1x.com/2020/06/07/tRGZG9.jpg'],
       tag: new Date()

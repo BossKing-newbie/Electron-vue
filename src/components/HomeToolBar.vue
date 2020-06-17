@@ -11,35 +11,21 @@
         <el-button icon="el-icon-message-solid" circle title="消息" @click="drawer = true"></el-button>
       </el-badge>
       <el-button icon="el-icon-switch-button" circle title="退出登录" class="item" @click="back"></el-button>
-      <el-drawer
-        :visible.sync="drawer"
-        :direction="direction">
-        <!--用户手册编辑区-->
-        <h4>用户手册</h4>
-        <el-divider></el-divider>
-        <span style="font-family: '华文楷体'; font-size: 18px;">感谢您对快递屋的支持和关注!
-                <br>很高兴能为您提供服务!
-                <br>希望我们的服务能让您满意!
-                <br><br/>
-        </span>
-        <table width="315" border="0" style="text-align: right; text-decoration: blink; font-size: 16px; font-family: '楷体';">
-          <tr>
-            <td width="118" style="text-align: right">个人信息：</td>
-            <td width="187" style="text-align: left">查看与修改信息</td>
-          </tr>
-          <tr>
-            <td style="text-align: right">客户服务：</td>
-            <td style="text-align: left">下单选择产品</td>
-          </tr>
-          <tr>
-            <td style="text-align: right">订单管理：</td>
-            <td style="text-align: left">物流信息管理与历史订单</td>
-          </tr>
-          <tr>
-            <td style="text-align: right">联系我们：</td>
-            <td style="text-align: left">随时点击咨询疑问</td>
-          </tr>
-        </table>
+      <el-drawer :visible.sync="drawer" :direction="direction">
+        <div class="seven">
+        <!--编辑区-->
+          <el-col></el-col>
+          <p style="font-size: larger">— — 营业时间 — —</p>
+          <p>夏季</p>
+          <p>8:00-20:00</p>
+          <p>冬季</p>
+          <p>9:00-21:00</p>
+          <el-rate v-model="value" show-text></el-rate>
+          <p style="font-size: 12px">当天送达：最快8小时门到门送达</p>
+          <p style="font-size: 12px">次日到达：最快12小时门到门送达</p>
+          <p style="font-size: 12px">隔日到达：最快36小时门到门送达</p>
+          <p style="font-size: 20px;color: transparent">这里用于格式</p>
+        </div>
       </el-drawer>
     </el-row>
   </el-header>
@@ -51,7 +37,8 @@ export default {
   data () {
     return {
       drawer: false,
-      direction: 'rtl'
+      direction: 'rtl',
+      value: null
     }
   },
   methods: {
@@ -86,4 +73,9 @@ export default {
     border none
   .item_gutter
     margin-left 580px
+  .seven
+    background-image: url('https://s1.ax1x.com/2020/06/16/NkD8G6.png')
+    margin-top -20px
+  .el-col
+    margin-top 150px
 </style>
