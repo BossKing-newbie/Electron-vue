@@ -19,17 +19,17 @@
         </el-form-item>
         <el-form-item prop="username" style="text-align: center">
           <el-row>
-            <el-input placeholder="用户昵称" prefix-icon="el-icon-user" clearable v-model="ruleForm.username"></el-input>
+            <el-input placeholder="请填写您的昵称" prefix-icon="el-icon-user" clearable v-model="ruleForm.username"></el-input>
           </el-row>
         </el-form-item>
         <el-form-item>
           <el-cascader
             v-model="selectedOptions"
             :options="options"
-            @change="handleChange" style="width: 250px" placeholder="请选择默认收货地区"></el-cascader>
+            @change="handleChange" style="width: 250px" clearable placeholder="请选择所在地区"></el-cascader>
         </el-form-item>
         <el-form-item prop="detailAddress">
-          <el-input placeholder="详细地址" prefix-icon="el-icon-location-information" clearable v-model="ruleForm.detailAddress"></el-input>
+          <el-input placeholder="请填写所在街道以及详细地址" prefix-icon="el-icon-location-information" clearable v-model="ruleForm.detailAddress"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')" round>确认修改</el-button>

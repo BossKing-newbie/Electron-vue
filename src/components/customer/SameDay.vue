@@ -1,181 +1,186 @@
 <template>
   <div class="sameday">
-  <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="寄件人信息" name="first" >
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="姓名:"  prop="sender_name">
-          <el-input v-model="form.sender_name"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号码:" prop="sender_phone">
-          <el-input  v-model="form.sender_phone"></el-input>
-        </el-form-item>
-        <el-form-item label="省市区:" prop="sender_Address"   style="text-align: left">
-          <el-cascader
-            v-model="selectedOptions"
-            :options="options"
-            @change="handleChange" style="width: 250px" placeholder="请选择默认收货地区"></el-cascader>
-        </el-form-item>
-        <el-form-item prop="sender_detailAddress" label="详细地址:">
-          <el-input placeholder="详细地址" prefix-icon="el-icon-location-information" clearable v-model="form.detailAddress"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">下一步</el-button>
-        </el-form-item>
-      </el-form>
-    </el-tab-pane>
-    <el-tab-pane label="收件人信息" name="second">
-      <el-form ref="form2" :model="form2" label-width="80px">
-        <el-form-item label="姓名:"  prop="recipient_name">
-          <el-input v-model="form2.recipient_name"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号码:" prop="recipient_phone">
-          <el-input  v-model="form2.recipient_phone"></el-input>
-        </el-form-item>
-        <el-form-item label="省市区:" prop="recipient_Address"   style="text-align: left">
-          <el-cascader
-            v-model="selectedOptions2"
-            :options="options"
-            @change="handleChange" style="width: 250px" placeholder="请选择默认收货地区"></el-cascader>
-        </el-form-item>
-        <el-form-item prop="recipient_detailAddress" label="详细地址:">
-          <el-input placeholder="详细地址" prefix-icon="el-icon-location-information" clearable v-model="form2.recipient_detailAddress"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">下一步</el-button>
-        </el-form-item>
-      </el-form>
-    </el-tab-pane>
-    <el-tab-pane label="货物信息" name="third" >
-      <el-form ref="form3" :model="form3" label-width="80px">
-        <el-form-item label="总重量:"  prop="weight"    style="text-align: left">
-          <el-input v-model="form3.weight" style="width:300px;"></el-input>KG
-        </el-form-item>
-        <el-form-item label="总体积:" prop="volume "    style="text-align: left">
-          <el-input  placeholder="m³"  v-model="form3.volume "  style="width:300px;"></el-input>m³
-        </el-form-item>
-        <el-form-item prop="volume" label="货物个数:"    style="text-align: left">
-          <el-input clearable v-model="form3.number "  style="width:180px;"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">确认下单</el-button>
-        </el-form-item>
-      </el-form>
-    </el-tab-pane>
-    <el-tab-pane label="估价" name="fourth" >估价</el-tab-pane>
-  </el-tabs>
+    <el-steps :active="active" finish-status="success"
+              align-center style="margin-top: 30px;height: 5px" >
+      <el-step title="寄件人信息"></el-step>
+      <el-step title="收件人信息"></el-step>
+      <el-step title="预约信息"></el-step>
+      <el-step title="完成下单"></el-step>
+    </el-steps>
+    <p style="margin-left: -500px;margin-top: 100px;font-size: 30px">当</p>
+    <p style="margin-left: -500px;font-size: 30px">日</p>
+    <p style="margin-left: -500px;font-size: 30px">达</p>
+    <!--寄件人信息和收件人信息的表单-->
+    <el-form label-position="right" :model="formLabelAlign" status-icon :rules="rules"
+             style="margin-top: -235px" size="mini" v-show="false">
+      <el-form-item label="姓名" prop="name">
+        <el-input v-model="formLabelAlign.name" placeholder="请填写联系人姓名" prefix-icon="el-icon-s-custom"></el-input>
+      </el-form-item>
+      <el-form-item label="手机号码" prop="number">
+        <el-input v-model="formLabelAlign.number" placeholder="请填写手机号码" prefix-icon="el-icon-phone-outline"></el-input>
+      </el-form-item>
+      <el-form-item label="省市区" prop="city">
+        <el-cascader
+          v-model="selectedOptions"
+          :options="options"
+          @change="handleChange" style="width: 250px" clearable placeholder="请选择所在地区,例如:广东省-深圳市-福田区"></el-cascader>
+      </el-form-item>
+      <el-form-item label="详细地址" prop="address">
+        <el-input v-model="formLabelAlign.address" placeholder="请填写所在街道以及详细地址" prefix-icon="el-icon-location"></el-input>
+      </el-form-item>
+      <el-form-item class="backone"><!-- 上一步这个按钮除了第一个界面不出现，后面三个界面都要出现-->
+        <el-button type="info" style="margin-top: 5px" @click="back">上一步</el-button>
+      </el-form-item>
+      <el-form-item class="nextone">
+      <el-button type="primary" style="margin-top: 5px" @click="next">下一步 <i class="el-icon-right"></i></el-button>
+      </el-form-item>
+    </el-form>
+    <!--预约信息的表单-->
+    <el-form label-position="right" :model="formLabelAlign" status-icon :rules="rules"
+             style="margin-top: -200px" size="mini" v-show="true">
+      <el-radio-group v-model="formLabelAlign.serve" style="margin-bottom: 10px;margin-top: -50px">
+        <el-radio label="快递员上门取件">快递员上门取件</el-radio>
+        <el-radio label="自行联系快递员或自寄">自行联系快递员或自寄</el-radio>
+      </el-radio-group>
+      <el-form-item label="上门时间" prop="value" style="margin-top: -10px">
+        <el-select v-model="formLabelAlign.value" clearable placeholder="请选择时间" style="width: 250px">
+          <el-option
+            v-for="item in timeoptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="快递产品" prop="pro">
+        <el-tag effect="plain" type="info" style="width: 180px;height: 65px;">
+          <p style="font-size: 20px;margin-top: 5px">￥12 起</p>
+          <p style="margin-top: -20px">明天12:00前送达</p>
+        </el-tag>
+      </el-form-item>
+      <el-form-item label="捎话给快递员" prop="message">
+        <el-input v-model="formLabelAlign.message" placeholder="您的备注" prefix-icon="el-icon-chat-line-square"></el-input>
+      </el-form-item>
+      <el-form-item class="backone"><!-- 上一步这个按钮除了第一个界面不出现，后面三个界面都要出现-->
+        <el-button type="info" style="margin-top: 30px;" @click="back">上一步</el-button>
+      </el-form-item>
+      <el-form-item class="nextone">
+        <el-button type="primary" style="margin-top: 30px;" @click="next">下一步 <i class="el-icon-right"></i></el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <script>
-import { regionData, CodeToText } from 'element-china-area-data'
+import { CodeToText, regionData } from 'element-china-area-data'
 
 export default {
+  name: 'SameDay',
   data () {
-    /* 验证姓名 */
-    const validatename = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入姓名'))
+    var checkName = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('姓名不能为空！'))
       } else {
         callback()
       }
     }
-    /* 验证手机 */
-    const validatephone = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入手机号码'))
+    var checkNumber = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('手机号不能为空！'))
       } else {
-        if (value.length === 11) {
+        const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+        console.log(reg.test(value))
+        if (reg.test(value)) {
           callback()
         } else {
-          callback(new Error('请输入正确格式的手机号码'))
+          return callback(new Error('请输入正确的手机号！'))
         }
       }
     }
-    /* 验证详细地址不为空 */
-    const validatedetailAddress = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入详细地址'))
+    var checkAddress = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('详细地址不能为空！'))
       } else {
         callback()
       }
     }
     return {
-      activeName: 'first',
+      active: 0,
       selectedOptions: [],
-      selectedOptions2: [],
       options: regionData,
-      form: {
-        sender_name: '',
-        sender_phone: '',
-        sender_Address: '',
-        sender_detailAddress: ''
+      formLabelAlign: {
+        name: '',
+        number: '',
+        city: '',
+        address: '',
+        serve: '快递员上门取件',
+        value: ''
       },
-      form2: {
-        recipient_name: '',
-        recipient_phone: '',
-        recipient_Address: '',
-        recipient_detailAddress: ''
-      },
-      form3: {
-        weight: '1',
-        volume: '0.01',
-        number: '1'
-      },
-
+      timeoptions: [{
+        value: 'time',
+        label: '一小时内'
+      }, {
+        value: 'time1',
+        label: '09:00~10:00'
+      }, {
+        value: 'time2',
+        label: '09:00~10:00'
+      }, {
+        value: 'time3',
+        label: '10:00~11:00'
+      }, {
+        value: 'time4',
+        label: '11:00~12:00'
+      }, {
+        value: 'time5',
+        label: '12:00~13:00'
+      }, {
+        value: 'time6',
+        label: '13:00~14:00'
+      }, {
+        value: 'time7',
+        label: '14:00~15:00'
+      }, {
+        value: 'time8',
+        label: '15:00~16:00'
+      }, {
+        value: 'time9',
+        label: '16:00~17:00'
+      }, {
+        value: 'time10',
+        label: '17:00~18:00'
+      }, {
+        value: 'time11',
+        label: '18:00~19:00'
+      }, {
+        value: 'time12',
+        label: '19:00~20:00'
+      }],
       rules: {
-        sender_name: [
-          {
-            validator: validatename,
-            trigger: 'blur'
-          }
+        name: [
+          { validator: checkName, trigger: 'blur' }
         ],
-        sender_phone: [
-          {
-            validator: validatephone,
-            trigger: 'blur'
-          }
-
+        number: [
+          { validator: checkNumber, trigger: 'blur' }
         ],
-        sender_detailAddress: [
-          {
-            validator: validatedetailAddress,
-            trigger: 'blur'
-          }
-        ],
-        recipient_name: [
-          {
-            validator: validatename,
-            trigger: 'blur'
-          }
-        ],
-        recipient_phone: [
-          {
-            validator: validatephone,
-            trigger: 'blur'
-          }
-
-        ],
-        recipient_detailAddress: [
-          {
-            validator: validatedetailAddress,
-            trigger: 'blur'
-          }
+        address: [
+          { validator: checkAddress, trigger: 'blur' }
         ]
       }
     }
   },
   methods: {
+    back () {
+      if (this.active-- < 0) this.active = 0
+    },
+    next () {
+      if (this.active++ > 3) this.active = 4
+    },
     handleChange () {
       console.log(this.selectedOptions)
       for (let i = 0; i < this.selectedOptions.length; i++) {
         this.ruleForm.address += CodeToText[this.selectedOptions[i]] + '-'
       }
-    },
-    handleClick (tab, event) {
-      console.log(tab, event)
-    },
-    onSubmit () {
-      console.log(2)
     }
   }
 }
@@ -189,4 +194,14 @@ export default {
     height 400px
     margin-left 85px
     margin-top 20px
+  .el-form-item
+    width 250px
+    height 50px
+    margin-left 200px
+  .nextone
+    margin-left 430px
+    margin-top -58px
+  .backone
+    margin-left -10px
+    margin-top -50px
 </style>
