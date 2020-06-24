@@ -65,6 +65,7 @@ export default {
         name: '',
         number: '',
         address: '',
+        detailAddress: '',
         selectedOptions: [],
         active: true
       },
@@ -94,7 +95,7 @@ export default {
       const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.formLabelAlign.address = this.prefix + '/' + this.formLabelAlign.address
+          this.formLabelAlign.detailAddress = this.prefix + '/' + this.formLabelAlign.address
           _this.$emit('switch', this.formLabelAlign)
         }
       })

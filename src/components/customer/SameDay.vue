@@ -71,6 +71,7 @@ export default {
             })
             setTimeout(() => {
               loading.close()
+              // 异步实现刷新组件缓存
               this.refreshCache = ['SenderForm', 'ReceiveForm', 'ReservationForm', 'PlaceOrder']
             }, 1000)
             this.index = 0
