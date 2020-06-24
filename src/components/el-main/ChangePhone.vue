@@ -6,13 +6,13 @@
     </el-row>
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="旧手机号" prop="oldPhone">
-        <el-input type="text" placeholder="请输入旧手机号" v-model="ruleForm.oldPhone" autocomplete="off" prefix-icon="el-icon-phone"></el-input>
+        <el-input type="text" placeholder="请输入旧手机号" clearable v-model="ruleForm.oldPhone" autocomplete="off" prefix-icon="el-icon-phone"></el-input>
       </el-form-item>
       <el-form-item label="新手机号" prop="phone">
-        <el-input type="text" placeholder="请输入新手机号" v-model="ruleForm.phone" prefix-icon="el-icon-phone-outline"></el-input>
+        <el-input type="text" placeholder="请输入新手机号" clearable v-model="ruleForm.phone" prefix-icon="el-icon-phone-outline"></el-input>
       </el-form-item>
       <el-form-item label="验证码" prop="number">
-        <el-input type="text" placeholder="请输入验证码" v-model="ruleForm.number" prefix-icon="el-icon-mobile">
+        <el-input type="text" placeholder="请输入验证码" clearable v-model="ruleForm.number" prefix-icon="el-icon-mobile">
           <el-button v-show="Verification" slot="append" @click="getCaptcha">{{CaptchaText}}</el-button>
           <el-button v-show="!Verification" slot="append"><span>{{timer}}秒后重新获取</span></el-button>
         </el-input>

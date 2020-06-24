@@ -3,10 +3,10 @@
   <el-form label-position="right" :model="formLabelAlign" status-icon :rules="rules"
            style="margin-top: -235px" size="mini" ref="senderForm">
     <el-form-item label="姓名" prop="name">
-      <el-input v-model="formLabelAlign.name" placeholder="请填写寄件人姓名" prefix-icon="el-icon-s-custom"></el-input>
+      <el-input v-model="formLabelAlign.name" clearable placeholder="请填写寄件人姓名" prefix-icon="el-icon-s-custom"></el-input>
     </el-form-item>
     <el-form-item label="手机号码" prop="number">
-      <el-input v-model="formLabelAlign.number" placeholder="请填写手机号码" prefix-icon="el-icon-phone-outline"></el-input>
+      <el-input v-model="formLabelAlign.number" clearable placeholder="请填写手机号码" prefix-icon="el-icon-phone-outline"></el-input>
     </el-form-item>
     <el-form-item label="省市区" prop="selectedOptions">
       <el-cascader
@@ -15,10 +15,10 @@
         @change="handleChange" style="width: 250px" clearable placeholder="请选择所在地区,例如:广东省-深圳市-福田区"></el-cascader>
     </el-form-item>
     <el-form-item label="详细地址" prop="address">
-      <el-input v-model="formLabelAlign.address" placeholder="请填写所在街道以及详细地址" prefix-icon="el-icon-location"></el-input>
+      <el-input v-model="formLabelAlign.address" clearable placeholder="请填写所在街道以及详细地址" prefix-icon="el-icon-location"></el-input>
     </el-form-item>
     <el-form-item class="nextone">
-      <el-button type="primary" style="margin-top: 5px" @click="next('senderForm')">下一步 <i class="el-icon-right"></i></el-button>
+      <el-button type="primary" @click="next('senderForm')">下一步 <i class="el-icon-right"></i></el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -67,16 +67,16 @@ export default {
       },
       rules: {
         name: [
-          { validator: checkName, trigger: 'blur' }
+          { required: true, validator: checkName, trigger: 'blur' }
         ],
         number: [
-          { validator: checkNumber, trigger: 'blur' }
+          { required: true, validator: checkNumber, trigger: 'blur' }
         ],
         address: [
-          { validator: checkAddress, trigger: 'blur' }
+          { required: true, validator: checkAddress, trigger: 'blur' }
         ],
         selectedOptions: [
-          { required: true, message: '请选择省市', trigger: 'change' }
+          { required: true, message: '请选择省市区！', trigger: 'change' }
         ]
       }
     }
@@ -108,5 +108,5 @@ export default {
     margin-left 200px
   .nextone
     margin-left 430px
-    margin-top -58px
+    margin-top -40px
 </style>

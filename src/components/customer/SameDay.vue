@@ -21,7 +21,7 @@
 
 <script>
 // 寄件人表单
-import SenderForm from './SenderForm'
+import SenderForm from './sameDay/SenderForm'
 // 预约信息
 import ReservationForm from './sameDay/ReservationForm'
 // 收件人表单

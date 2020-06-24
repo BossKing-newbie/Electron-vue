@@ -8,7 +8,7 @@
         <el-input placeholder="请输入账号" v-model="ruleForm.account" clearable prefix-icon="el-icon-user"></el-input>
       </el-form-item>
       <el-form-item prop="pass">
-        <el-input type="password" placeholder="请输入密码" v-model="ruleForm.pass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
+        <el-input type="password" placeholder="请输入密码" v-model="ruleForm.pass" clearable autocomplete="off" prefix-icon="el-icon-lock"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" round @click="login">登录</el-button>

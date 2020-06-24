@@ -16,20 +16,26 @@
         </el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="快递产品">
-      <el-tag effect="plain" type="info" style="width: 180px;height: 65px;">
-        <p style="font-size: 20px;margin-top: 5px">￥12 起</p>
-        <p style="margin-top: -20px">明天12:00前送达</p>
-      </el-tag>
+    <el-form-item label="快递产品" prop="product">
+      <el-radio-group v-model="formLabelAlign.product">
+        <el-radio-button label="12">
+          <p style="font-size: 14px;margin-top: 0px;">￥?? 起</p>
+          <p style="margin-top: -5px;font-size: 12px;margin-bottom: 0px">??日12:00前送达</p>
+        </el-radio-button>
+        <el-radio-button label="18">
+          <p style="font-size: 14px;margin-top: 0px">￥?? 起</p>
+          <p style="margin-top: -5px;font-size: 12px;margin-bottom: 0px">??日18:00前送达</p>
+        </el-radio-button>
+      </el-radio-group>
     </el-form-item>
-    <el-form-item label="捎话给快递员">
-      <el-input placeholder="您的备注" prefix-icon="el-icon-chat-line-square" v-model="formLabelAlign.message"></el-input>
+    <el-form-item label="捎话给快递员" style="margin-top: 30px;">
+      <el-input placeholder="您的备注 (如: 带文件封、带纸箱等)" clearable prefix-icon="el-icon-chat-line-square" v-model="formLabelAlign.message"></el-input>
     </el-form-item>
     <el-form-item class="backone"><!-- 上一步这个按钮除了第一个界面不出现，后面三个界面都要出现-->
-      <el-button type="info" style="margin-top: 30px;" @click="back">上一步</el-button>
+      <el-button type="info" style="margin-top: 13px" @click="back">上一步</el-button>
     </el-form-item>
     <el-form-item class="nextone">
-      <el-button type="primary" style="margin-top: 30px;" @click="next('reservationForm')">下一步 <i class="el-icon-right"></i></el-button>
+      <el-button type="primary" @click="next('reservationForm')">下一步 <i class="el-icon-right"></i></el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -42,6 +48,7 @@ export default {
       formLabelAlign: {
         serve: '快递员上门取件',
         value: '',
+        product: '',
         time: '',
         active: true,
         message: ''
@@ -82,7 +89,10 @@ export default {
       }],
       rules: {
         value: [
-          { required: true, message: '请选择时间', trigger: 'change' }
+          { required: true, message: '请选择时间！', trigger: 'change' }
+        ],
+        product: [
+          { required: true }
         ]
       }
     }
@@ -158,7 +168,7 @@ export default {
     margin-left 200px
   .nextone
     margin-left 430px
-    margin-top -58px
+    margin-top -46px
   .backone
     margin-left -10px
     margin-top -50px

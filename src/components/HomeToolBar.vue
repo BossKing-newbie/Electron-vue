@@ -4,7 +4,7 @@
       <el-image src="https://s1.ax1x.com/2020/05/16/Y6EZlQ.png"></el-image>
       <el-button class="item_gutter" icon="el-icon-s-home" circle title="首页" @click="renderingMain('mainpage')"></el-button>
       <span></span>
-      <el-tooltip :content="currentDate" placement="bottom" class="item">
+      <el-tooltip :content="currentDate" placement="bottom" class="item" effect="light">
         <el-button icon="el-icon-date" circle></el-button>
       </el-tooltip>
       <el-badge :value="1" class="item">

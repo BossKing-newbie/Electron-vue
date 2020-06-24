@@ -32,7 +32,7 @@
           <el-input placeholder="请填写所在街道以及详细地址" prefix-icon="el-icon-location-information" clearable v-model="ruleForm.detailAddress"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')" round>确认修改</el-button>
+          <el-button type="primary" style="margin-top: 15px" @click="submitForm('ruleForm')" round>确认修改</el-button>
         </el-form-item>
       </el-form>
     </div>
