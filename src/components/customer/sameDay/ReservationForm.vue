@@ -19,11 +19,11 @@
     <el-form-item label="快递产品" prop="product">
       <el-radio-group v-model="formLabelAlign.product">
         <el-radio-button label="12">
-          <p style="font-size: 14px;margin-top: 0px;">￥?? 起</p>
+          <p style="font-size: 14px;margin-top: 0px;">￥{{formLabelAlign.money}} 起</p>
           <p style="margin-top: -5px;font-size: 12px;margin-bottom: 0px">{{strDate}}日12:00前送达</p>
         </el-radio-button>
         <el-radio-button label="18">
-          <p style="font-size: 14px;margin-top: 0px">￥?? 起</p>
+          <p style="font-size: 14px;margin-top: 0px">￥{{formLabelAlign.money}} 起</p>
           <p style="margin-top: -5px;font-size: 12px;margin-bottom: 0px">{{strDate}}日18:00前送达</p>
         </el-radio-button>
       </el-radio-group>
@@ -51,7 +51,8 @@ export default {
         product: '',
         time: '',
         active: true,
-        message: ''
+        message: '',
+        money: 12
       },
       strDate: '',
       isShow: true,
@@ -139,7 +140,7 @@ export default {
     changeValue () {
       const date = new Date()
       // eslint-disable-next-line no-unused-vars
-      let strDate = date.getDate()
+      let strDate = date.getDate() + 1
       const year = date.getFullYear()
       let month = date.getMonth() + 1
       const hour = date.getHours()
@@ -154,7 +155,7 @@ export default {
         strDate = '0' + strDate
       }
       this.formLabelAlign.time = year + '-' + month + '-' + strDate + ' ' +
-        this.formLabelAlign.value + ':00 ~ ' + (this.formLabelAlign.value + 1) + ':00'
+        this.formLabelAlign.value + ':00~' + (this.formLabelAlign.value + 1) + ':00'
       this.strDate = strDate
     },
     // 监听radio按钮变化,实现上门预订和自行寄件
