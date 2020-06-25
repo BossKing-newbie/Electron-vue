@@ -34,7 +34,7 @@
     <el-form-item :class="backOneClass"><!-- 上一步这个按钮除了第一个界面不出现，后面三个界面都要出现-->
       <el-button type="info" style="margin-top: 13px" @click="back">上一步</el-button>
     </el-form-item>
-    <el-form-item class="nextone">
+    <el-form-item :class="nextoneClass">
       <el-button type="primary" @click="next('reservationForm')">下一步 <i class="el-icon-right"></i></el-button>
     </el-form-item>
   </el-form>
@@ -56,6 +56,7 @@ export default {
       strDate: '',
       isShow: true,
       backOneClass: 'backone',
+      nextoneClass: 'nextone',
       timeoptions: [{
         value: 9,
         label: '09:00~10:00'
@@ -161,9 +162,11 @@ export default {
       if (label === 'PickUp') {
         this.isShow = true
         this.backOneClass = 'backone'
+        this.nextoneClass = 'nextone'
       } else {
         this.isShow = false
         this.backOneClass = 'changeBackOne'
+        this.nextoneClass = 'changeNextone'
         this.formLabelAlign.time = ''
         this.formLabelAlign.value = ''
         this.formLabelAlign.message = ''
@@ -182,9 +185,12 @@ export default {
     margin-left 430px
     margin-top -46px
   .backone
-    margin-left -20px
+    margin-left -10px
     margin-top -50px
   .changeBackOne
-    margin-left 10px
-    margin-top 100px
+    margin-left -10px
+    margin-top 116px
+  .changeNextone
+    margin-left 430px
+    margin-top -56px
 </style>

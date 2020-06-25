@@ -1,9 +1,20 @@
 <template>
-    <div style="margin-top: -200px">
-      <h3>订单号：{{order.randomCode}}</h3>
-      <el-button type="info"  style="margin-top: 120px" @click="back">返回 </el-button>
-      <el-button type="primary" style="margin-left: 120px" @click="next">下单 <i class="el-icon-right"></i></el-button>
-    </div>
+  <div class="demo">
+    <el-tag type="info" effect="plain">
+      <el-divider direction="vertical"></el-divider>
+      <p style="margin-top: -110px;margin-left: -250px">寄件人姓名：郑小姐</p>
+      <p style="margin-left: -210px">寄件人电话：13168597846</p>
+      <p style="margin-left: -230px">上门时间：09:00~10:00</p>
+      <p style="margin-top: -126px;margin-left: 150px">收件人姓名：郑小姐</p>
+      <p style="margin-left: 190px">收件人电话：13168597846</p>
+      <p style="margin-left: 140px">快递产品：￥12元</p>
+      <p style="margin-left: -5px">寄件人地址：广东省佛山市顺德区大良街道环市北路承德楼A座402</p>
+      <p style="margin-top: -5px;margin-left: -5px">收件人地址：xxx</p>
+      <p style="color: transparent">用于格式</p>
+    </el-tag>
+    <el-button style="margin-right: 150px" type="info" size="mini" @click="back">返回 </el-button>
+    <el-button type="primary" size="mini" @click="next">确认 <i class="el-icon-check"></i></el-button>
+  </div>
 </template>
 
 <script>
@@ -52,6 +63,16 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="stylus">
+  .demo
+    margin-top -225px
+  .el-tag
+    width 400px
+    height 210px
+    margin-left 10px
+  .el-button
+    margin-left -340px
+  .el-divider
+    height 100px
+    margin-top 20px
 </style>
