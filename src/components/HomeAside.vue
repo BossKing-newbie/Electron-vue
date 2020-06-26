@@ -54,7 +54,7 @@ export default {
   name: 'HomeAside',
   data () {
     return {
-      customerArray: [{ title: '当天达', index: '2-1', order: 'sameday' }, { title: '次日达', index: '2-2', order: 'next' }, { title: '72小时达', index: '2-3', order: 'seventy' }],
+      customerArray: [{ title: '当日达', index: '2-1', order: 'sameday' }, { title: '次日达', index: '2-2', order: 'next' }, { title: '隔日达', index: '2-3', order: 'seventy' }],
       orderArray: [{ title: '物流状态', index: '3-1', order: 'logistics' }, { title: '历史订单', index: '3-2', order: 'historyorder' }]
     }
   },

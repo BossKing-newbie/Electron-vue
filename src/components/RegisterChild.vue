@@ -4,14 +4,14 @@
       <el-form-item prop="userId" style="margin-top:15px">
         <el-input placeholder="请输入账号" v-model="ruleForm.userId" clearable prefix-icon="el-icon-user"></el-input>
       </el-form-item>
-      <el-form-item prop="userPassword">
-        <el-input placeholder="请输入6~15位密码" type="password" v-model="ruleForm.userPassword" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
+      <el-form-item prop="pass">
+        <el-input placeholder="请输入6~15位密码" type="password" v-model="ruleForm.pass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
       </el-form-item>
       <el-form-item prop="checkPass">
-        <el-input placeholder="请确认密码" type="password" v-model="ruleForm.checkPass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
+        <el-input placeholder="请确认密码" type="password" clearable show-password v-model="ruleForm.checkPass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
       </el-form-item>
-      <el-form-item prop="userPhone">
-        <el-input placeholder="请输入手机号码" type="phone" v-model="ruleForm.userPhone" prefix-icon="el-icon-phone"/>
+      <el-form-item prop="phone">
+        <el-input placeholder="请输入手机号码" type="phone" v-model="ruleForm.phone" prefix-icon="el-icon-phone"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')" round>注册</el-button>

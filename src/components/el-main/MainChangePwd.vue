@@ -6,13 +6,13 @@
       </el-row>
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="旧密码" prop="oldPass">
-          <el-input type="password" placeholder="请输入旧密码" v-model="ruleForm.oldPass" autocomplete="off" prefix-icon="el-icon-unlock"></el-input>
+          <el-input type="password" clearable show-password placeholder="请输入旧密码" v-model="ruleForm.oldPass" autocomplete="off" prefix-icon="el-icon-unlock"></el-input>
         </el-form-item>
         <el-form-item label="新密码" prop="pass">
-          <el-input type="password" placeholder="请输入新密码" v-model="ruleForm.pass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
+          <el-input type="password" clearable show-password placeholder="请输入新密码" v-model="ruleForm.pass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" placeholder="请再次输入新密码" v-model="ruleForm.checkPass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
+          <el-input type="password" clearable show-password placeholder="请再次输入新密码" v-model="ruleForm.checkPass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button style="margin-right: 100px" type="primary" @click="submitForm('ruleForm')" round>提交</el-button>
