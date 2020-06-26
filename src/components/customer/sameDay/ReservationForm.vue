@@ -17,13 +17,13 @@
       </el-select>
     </el-form-item>
     <el-form-item label="快递产品" prop="product">
-      <el-radio-group v-model="formLabelAlign.product">
+      <el-radio-group v-model="formLabelAlign.product" @change="changeMoney">
         <el-radio-button label="12">
-          <p style="font-size: 14px;margin-top: 0px;">￥{{formLabelAlign.money}} 起</p>
+          <p style="font-size: 14px;margin-top: 0px;">￥{{money}} 起</p>
           <p style="margin-top: -5px;font-size: 12px;margin-bottom: 0px">{{strDate}}日12:00前送达</p>
         </el-radio-button>
         <el-radio-button label="18">
-          <p style="font-size: 14px;margin-top: 0px">￥{{formLabelAlign.money}} 起</p>
+          <p style="font-size: 14px;margin-top: 0px">￥{{money+5}} 起</p>
           <p style="margin-top: -5px;font-size: 12px;margin-bottom: 0px">{{strDate}}日18:00前送达</p>
         </el-radio-button>
       </el-radio-group>
@@ -52,8 +52,9 @@ export default {
         time: '',
         active: true,
         message: '',
-        money: 12
+        money: 0
       },
+      money: 12,
       strDate: '',
       isShow: true,
       backOneClass: 'backone',
@@ -168,9 +169,16 @@ export default {
         this.isShow = false
         this.backOneClass = 'changeBackOne'
         this.nextoneClass = 'changeNextone'
-        this.formLabelAlign.time = ''
+        this.formLabelAlign.time = '无'
         this.formLabelAlign.value = ''
         this.formLabelAlign.message = ''
+      }
+    },
+    changeMoney (label) {
+      if (label === '12') {
+        this.formLabelAlign.money = this.money
+      } else {
+        this.formLabelAlign.money = this.money + 5
       }
     }
   }
