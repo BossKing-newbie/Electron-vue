@@ -34,7 +34,7 @@ export default {
     return {
       active: 0,
       index: 0,
-      refreshCache: ['SenderForm', 'ReceiveForm', 'ReservationForm', 'PlaceOrder'], // 是否刷新缓存
+      refreshCache: ['SenderForm', 'ReceiveForm', 'ReservationForm'], // 是否刷新缓存
       compon: ['senderform', 'receiveform', 'reservation', 'placeorder'],
       sender: {},
       receive: {},
@@ -72,7 +72,7 @@ export default {
             setTimeout(() => {
               loading.close()
               // 异步实现刷新组件缓存
-              this.refreshCache = ['SenderForm', 'ReceiveForm', 'ReservationForm', 'PlaceOrder']
+              this.refreshCache = ['SenderForm', 'ReceiveForm', 'ReservationForm']
             }, 1000)
             this.index = 0
             this.active = 0

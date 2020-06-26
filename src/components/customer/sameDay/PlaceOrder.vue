@@ -25,7 +25,7 @@ export default {
       order: {
         active: true
       },
-      deliveryDetails: {}
+      deliveryDetails: this.getInfo
     }
   },
   methods: {
@@ -40,7 +40,6 @@ export default {
   },
   mounted () {
     this.deliveryDetails = JSON.parse(sessionStorage.getItem('SameDayDate'))
-    console.log(this.deliveryDetails)
   }
 }
 </script>
