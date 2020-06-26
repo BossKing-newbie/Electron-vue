@@ -6,7 +6,7 @@
       <p style="margin-left: -210px">寄件人电话：{{deliveryDetails[0].number}}</p>
       <p style="margin-left: -200px">上门时间：{{deliveryDetails[2].time.split('-')[1] + '-' + deliveryDetails[2].time.split('-')[2]}}</p>
       <p style="margin-top: -126px;margin-left: 150px">收件人姓名：{{deliveryDetails[1].name}}</p>
-      <p style="margin-left: 190px">收件人电话：{{deliveryDetails[0].number}}</p>
+      <p style="margin-left: 190px">收件人电话：{{deliveryDetails[1].number}}</p>
       <p style="margin-left: 140px">快递产品：￥{{deliveryDetails[2].money}}元</p>
       <p style="margin-left: -5px">寄件人地址：{{deliveryDetails[0].detailAddress.split('/').join('')}}</p>
       <p style="margin-top: -5px;margin-left: -5px">收件人地址：{{deliveryDetails[1].detailAddress.split('/').join('')}}</p>

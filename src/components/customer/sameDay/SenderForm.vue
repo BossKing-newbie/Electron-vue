@@ -93,6 +93,7 @@ export default {
       })
     },
     handleChange () {
+      this.prefix = ''
       for (let i = 0; i < this.formLabelAlign.selectedOptions.length; i++) {
         this.prefix += CodeToText[this.formLabelAlign.selectedOptions[i]]
       }
