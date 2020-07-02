@@ -110,6 +110,13 @@ ipcMain.on('changLoginSize', e => {
   win.setTitle('登录界面')
   win.setResizable(false)
 })
+ipcMain.on('changIndexSize', e => {
+  win.setResizable(true)
+  win.setSize(400, 400)
+  win.center()
+  win.setTitle('首页')
+  win.setResizable(false)
+})
 ipcMain.on('close', e =>
   win.close()
 )
