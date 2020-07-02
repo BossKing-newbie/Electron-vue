@@ -18,13 +18,13 @@
     </el-form-item>
     <el-form-item label="快递产品" prop="product">
       <el-radio-group v-model="formLabelAlign.product" @change="changeMoney">
-        <el-radio-button label="12">
+        <el-radio-button label="one">
           <p style="font-size: 14px;margin-top: 0px;">￥{{money+5}} 起</p>
-          <p style="margin-top: -5px;font-size: 12px;margin-bottom: 0px">{{strDate}}日12:00前送达</p>
+          <p style="margin-top: -5px;font-size: 11.8px;margin-bottom: 0px">{{strDate}}日12:00 前送达</p>
         </el-radio-button>
-        <el-radio-button label="18">
+        <el-radio-button label="two">
           <p style="font-size: 14px;margin-top: 0px">￥{{money}} 起</p>
-          <p style="margin-top: -5px;font-size: 12px;margin-bottom: 0px">{{strDate}}日18:00前送达</p>
+          <p style="margin-top: -5px;font-size: 11.8px;margin-bottom: 0px">{{strDate}}日18:00 前送达</p>
         </el-radio-button>
       </el-radio-group>
     </el-form-item>
@@ -54,12 +54,15 @@ export default {
         message: '',
         money: 0
       },
-      money: 12,
+      money: 18,
       strDate: '',
       isShow: true,
       backOneClass: 'backone',
       nextoneClass: 'nextone',
       timeoptions: [{
+        value: 8,
+        label: '08:00~09:00'
+      }, {
         value: 9,
         label: '09:00~10:00'
       }, {
@@ -121,7 +124,7 @@ export default {
       const date = new Date()
       // eslint-disable-next-line no-unused-vars
       const hour = date.getHours()
-      const start = 9
+      const start = 8
       const end = 19
       if (callback) {
         if (hour >= end) {
@@ -148,16 +151,20 @@ export default {
       }
       const year = date.getFullYear()
       let month = date.getMonth() + 1
-      let strDate = date.getDate()
+      let strDate = date.getDate() // 预约时间
+      let sendDate = date.getDate() + 1 // 送达时间（当日达：比预约时间多一天）
       if (month >= 1 && month <= 9) {
         month = '0' + month
       }
       if (strDate >= 0 && strDate <= 9) {
         strDate = '0' + strDate
       }
+      if (sendDate >= 0 && sendDate <= 9) {
+        sendDate = '0' + sendDate
+      }
       this.formLabelAlign.time = year + '-' + month + '-' + strDate + ' ' +
         this.formLabelAlign.value + ':00~' + (this.formLabelAlign.value + 1) + ':00'
-      this.strDate = strDate
+      this.strDate = sendDate // 这个是送达时间
     },
     // 监听radio按钮变化,实现上门预订和自行寄件
     changeRadio (label) {
@@ -175,7 +182,7 @@ export default {
       }
     },
     changeMoney (label) {
-      if (label === '12') {
+      if (label === 'one') {
         this.formLabelAlign.money = this.money + 5
       } else {
         this.formLabelAlign.money = this.money

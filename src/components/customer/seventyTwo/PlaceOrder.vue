@@ -2,15 +2,14 @@
   <div class="demo">
     <el-tag type="info" effect="plain">
       <el-divider direction="vertical"></el-divider>
-      <p style="margin-top: -110px;margin-left: -250px">寄件人姓名：{{senderName}}</p>
+      <p style="margin-top: -105px;margin-left: -250px">寄件人姓名：{{senderName}}</p>
       <p style="margin-left: -210px">寄件人电话：{{senderNumber}}</p>
       <p style="margin-left: -200px">上门时间：{{reservationTime}}</p>
       <p style="margin-top: -126px;margin-left: 150px">收件人姓名：{{receiveName}}</p>
       <p style="margin-left: 190px">收件人电话：{{receiveNumber}}</p>
-      <p style="margin-left: 140px">快递产品：￥{{money}}元</p>
+      <p style="margin-left: 140px">快递产品：￥{{money}} 起</p>
       <p style="margin-left: -5px">寄件人地址：{{senderAddress}}</p>
       <p style="margin-top: -5px;margin-left: -5px">收件人地址：{{receiveAddress}}</p>
-      <p style="color: transparent">用于格式</p>
     </el-tag>
     <el-button style="margin-right: 150px" type="info" size="mini" @click="back">返回 </el-button>
     <el-button type="primary" size="mini" @click="next">确认 <i class="el-icon-check"></i></el-button>
@@ -69,10 +68,11 @@ export default {
     margin-top -225px
   .el-tag
     width 400px
-    height 210px
-    margin-left 10px
+    height 220px
+    margin-left 40px
   .el-button
-    margin-left -340px
+    margin-left 40px
+    margin-top 13px
   .el-divider
     height 100px
     margin-top 20px

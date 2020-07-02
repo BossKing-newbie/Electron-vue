@@ -1,5 +1,5 @@
 <template>
-  <div class="sameday">
+  <div class="seventytwo">
     <el-steps :active="active" finish-status="success"
               align-center style="margin-top: 30px;height: 5px" >
       <el-step title="寄件人信息"></el-step>
@@ -7,10 +7,8 @@
       <el-step title="预约信息"></el-step>
       <el-step title="完成下单"></el-step>
     </el-steps>
-    <p style="margin-left: -500px;margin-top: 100px;font-size: 30px">
-      72
-    </p>
-    <p style="margin-left: -500px;font-size: 30px">小时</p>
+    <p style="margin-left: -500px;margin-top: 100px;font-size: 30px">隔</p>
+    <p style="margin-left: -500px;font-size: 30px">日</p>
     <p style="margin-left: -500px;font-size: 30px">达</p>
     <!--组件切换的奥秘-->
     <keep-alive :include="refreshCache">
@@ -29,7 +27,7 @@ import ReceiveForm from './seventyTwo/ReceiveForm'
 // 下单界面
 import PlaceOrder from './seventyTwo/PlaceOrder'
 export default {
-  name: 'SameDay',
+  name: 'SeventyTwo',
   data () {
     return {
       active: 0,
@@ -95,7 +93,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  .sameday
+  .seventytwo
     box-shadow 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
     border-radius 10px
     width 650px
