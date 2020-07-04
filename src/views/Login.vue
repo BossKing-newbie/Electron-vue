@@ -1,5 +1,7 @@
 <template>
   <div>
+    <el-page-header @back="back" content="用户登录">
+    </el-page-header>
     <div class="title-bar">
       <span v-text="title"></span>
     </div>
@@ -33,6 +35,9 @@ export default {
     },
     changeLoginSize () {
       ipcRenderer.send('changLoginSize')
+    },
+    back () {
+      this.$router.push('/')
     }
   },
   components: {

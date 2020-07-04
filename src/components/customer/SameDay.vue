@@ -7,9 +7,7 @@
       <el-step title="预约信息"></el-step>
       <el-step title="完成下单"></el-step>
     </el-steps>
-    <p style="margin-left: -500px;margin-top: 100px;font-size: 30px">
-      当
-    </p>
+    <p style="margin-left: -500px;margin-top: 100px;font-size: 30px">当</p>
     <p style="margin-left: -500px;font-size: 30px">日</p>
     <p style="margin-left: -500px;font-size: 30px">达</p>
     <!--组件切换的奥秘-->

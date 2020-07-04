@@ -19,7 +19,7 @@
     <el-form-item label="快递产品" prop="product">
       <el-radio-group v-model="formLabelAlign.product" @change="changeMoney">
         <el-radio-button label="one">
-          <p style="font-size: 14px;margin-top: 0px;">￥{{money+5}} 起</p>
+          <p style="font-size: 14px;margin-top: 0px;">￥{{money+4}} 起</p>
           <p style="margin-top: -5px;font-size: 11.8px;margin-bottom: 0px">{{strDate}}日12:00 前送达</p>
         </el-radio-button>
         <el-radio-button label="two">
@@ -54,7 +54,7 @@ export default {
         message: '',
         money: 0
       },
-      money: 18,
+      money: 8,
       strDate: '',
       isShow: true,
       backOneClass: 'backone',
@@ -152,7 +152,7 @@ export default {
       const year = date.getFullYear()
       let month = date.getMonth() + 1
       let strDate = date.getDate() // 预约时间
-      let sendDate = date.getDate() + 1 // 送达时间（当日达：比预约时间多一天）
+      let sendDate = date.getDate() + 3 // 送达时间（隔日达：比预约时间多三天）
       if (month >= 1 && month <= 9) {
         month = '0' + month
       }
@@ -183,7 +183,7 @@ export default {
     },
     changeMoney (label) {
       if (label === 'one') {
-        this.formLabelAlign.money = this.money + 5
+        this.formLabelAlign.money = this.money + 4
       } else {
         this.formLabelAlign.money = this.money
       }
