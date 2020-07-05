@@ -18,11 +18,11 @@
     </el-form-item>
     <el-form-item label="快递产品" prop="product">
       <el-radio-group v-model="formLabelAlign.product" @change="changeMoney">
-        <el-radio-button label="one">
+        <el-radio-button label="next_day-12">
           <p style="font-size: 14px;margin-top: 0px;">￥{{money+6}} 起</p>
           <p style="margin-top: -5px;font-size: 11.8px;margin-bottom: 0px">{{strDate}}日12:00 前送达</p>
         </el-radio-button>
-        <el-radio-button label="two">
+        <el-radio-button label="next_day-18">
           <p style="font-size: 14px;margin-top: 0px">￥{{money}} 起</p>
           <p style="margin-top: -5px;font-size: 11.8px;margin-bottom: 0px">{{strDate}}日18:00 前送达</p>
         </el-radio-button>
@@ -59,6 +59,8 @@ export default {
       isShow: true,
       backOneClass: 'backone',
       nextoneClass: 'nextone',
+      selectedOptions1: [],
+      selectedOptions2: [],
       timeoptions: [{
         value: 8,
         label: '08:00~09:00'
@@ -187,7 +189,41 @@ export default {
       } else {
         this.formLabelAlign.money = this.money
       }
+    },
+    judgeDistance () {
+      const that = this
+      // eslint-disable-next-line no-unused-vars
+      let flag = ''
+      this.axios({
+        method: 'get',
+        url: 'http://localhost:8081/order/getProducts/next_day'
+      }).then(function (response) {
+        console.log(response)
+        that.money = response.data.productsPrice
+        const selectOptions1 = JSON.parse(sessionStorage.getItem('SameDayDate'))[0].selectedOptions
+        const selectOptions2 = JSON.parse(sessionStorage.getItem('SameDayDate'))[1].selectedOptions
+        if (selectOptions1[0] === selectOptions2[0]) {
+          flag = '省内'
+          if (selectOptions1[1] === selectOptions2[1]) {
+            flag = '同城'
+          }
+        } else {
+          flag = '省外'
+        }
+        console.log(flag)
+        switch (flag) {
+          case '省外':
+            that.money += 3
+            break
+          case '省内':
+            that.money += 2
+            break
+        }
+      })
     }
+  },
+  mounted () {
+    this.judgeDistance()
   }
 }
 </script>

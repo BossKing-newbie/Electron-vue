@@ -59,12 +59,12 @@ export default {
       options: regionData,
       prefix: '',
       formLabelAlign: {
-        name: '',
-        number: '',
-        address: '',
-        detailAddress: '',
-        selectedOptions: [],
-        active: true
+        name: '', // 寄件人
+        number: '', // 电话
+        address: '', // 地址
+        detailAddress: '', // 详细地址
+        selectedOptions: [], // 省市编码
+        active: true // 切换组件flag
       },
       rules: {
         name: [

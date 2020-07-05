@@ -17,6 +17,8 @@
 </template>
 
 <script>
+// 引入vue字符串序列化对象
+import Qs from 'qs'
 export default {
   name: 'PlaceOrder',
   data () {
@@ -32,7 +34,8 @@ export default {
       receiveNumber: '',
       money: '',
       senderAddress: '',
-      receiveAddress: ''
+      receiveAddress: '',
+      productsId: ''
     }
   },
   methods: {
@@ -41,8 +44,48 @@ export default {
       this.$emit('switch', this.order)
     },
     next () {
+      /*
+      order_sender 寄件人
+      order_sender_phone 联系电话
+      order_recipient 收件人
+      order_recipient_phone 收件人电话
+      order_form_start_address 发货地址
+      order_form_end_address 收货地址
+
+      */
       this.order.active = true
-      this.$emit('switch', this.order)
+      const data = Qs.parse(sessionStorage.getItem('user'))
+      const dataObject = {
+        orderSender: this.senderName,
+        orderSenderPhone: this.senderNumber,
+        orderRecipient: this.receiveName,
+        orderRecipientPhone: this.receiveNumber,
+        orderFormStartAddress: this.senderAddress,
+        orderFormEndAddress: this.receiveAddress,
+        orderFormUserId: data.userId,
+        reserveTime: this.deliveryDetails[2].time,
+        orderFormProductsId: this.productsId,
+        orderFormMoney: this.money
+      } // 数据库连接对象
+      console.log(dataObject)
+      // 定义当前指针域
+      const that = this
+      this.axios({
+        url: 'http://localhost:8081/order/insert',
+        method: 'post',
+        data: Qs.stringify(dataObject)
+      }).then(function (response) {
+        console.log(response)
+        if (response.data.code === 200) {
+          that.$emit('switch', that.order)
+        } else {
+          that.$message({
+            message: '服务器发送错误！',
+            type: 'error',
+            center: true
+          })
+        }
+      })
     }
   },
   mounted () {
@@ -59,6 +102,7 @@ export default {
     this.money = this.deliveryDetails[2].money
     this.senderAddress = this.deliveryDetails[0].detailAddress.split('/').join('')
     this.receiveAddress = this.deliveryDetails[1].detailAddress.split('/').join('')
+    this.productsId = this.deliveryDetails[2].product
   }
 }
 </script>

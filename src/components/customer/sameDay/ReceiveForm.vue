@@ -62,11 +62,11 @@ export default {
       options: regionData,
       prefix: '',
       formLabelAlign: {
-        name: '',
-        number: '',
-        address: '',
-        detailAddress: '',
-        selectedOptions: [],
+        name: '', // 收件人
+        number: '', // 电话
+        address: '', // 地址
+        detailAddress: '', // 详细地址
+        selectedOptions: [], // 省市编码
         active: true
       },
       rules: {
