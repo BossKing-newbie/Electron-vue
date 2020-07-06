@@ -3,6 +3,7 @@
   <el-table
     :data="tableData"
     style="width: 100%"
+    :row-class-name="changeTableColor"
     max-height="400">
     <el-table-column
       fixed
@@ -12,7 +13,7 @@
     </el-table-column>
     <el-table-column
       prop="id"
-      label="产品id"
+      label="产品名称"
       width="100">
     </el-table-column>
     <el-table-column
@@ -50,13 +51,13 @@
       label="操作"
       width="150">
       <template slot-scope="scope">
-        <el-button
-          @click.native.prevent="deleteRow(scope.$index, tableData)"
+        <el-button v-if="!show"
+          @click.native.prevent="cancelReserve(scope.$index, tableData)"
           type="text"
           size="small">
-          确认收货
+          取消预约
         </el-button>
-        <el-button
+        <el-button v-if="show"
           @click.native.prevent="deleteRow(scope.$index, tableData)"
           type="text"
           size="small">
@@ -69,78 +70,67 @@
 </template>
 
 <script>
+import Qs from 'qs'
+
 export default {
   methods: {
+    cancelReserve (index, rows) {
+      const that = this
+      console.log(rows[index].number)
+      this.axios({
+        url: 'http://localhost:8081/order/cancel/' + rows[index].number,
+        method: 'DELETE'
+      }).then(function (response) {
+        console.log(response)
+        if (response.data.code === 200) {
+          that.$message({
+            message: '取消成功',
+            center: true,
+            type: 'success'
+          })
+          that.selectOrderForm()
+        } else {
+          that.$message({
+            message: '取消失败',
+            center: true,
+            type: 'error'
+          })
+        }
+      })
+    },
     deleteRow (index, rows) {
-      rows.splice(index, 1)
+      if (rows[index].status === '预约中') {
+        this.show = false
+      } else {
+        this.show = true
+      }
+    },
+    selectOrderForm () {
+      const data = Qs.parse(sessionStorage.getItem('user'))
+      const that = this
+      this.axios({
+        url: 'http://localhost:8081/order/select/' + data.userId,
+        method: 'get'
+      }).then(function (response) {
+        that.tableData = response.data
+      })
+    },
+    changeTableColor (row, rowIndex) {
+      if (row.row.status === '预约中') {
+        this.show = false
+      } else {
+        this.show = true
+      }
+      return ''
     }
+  },
+  mounted () {
+    this.selectOrderForm()
   },
   data () {
     return {
-      tableData: [{
-        number: '20170060320',
-        id: '001',
-        date: '2020-6-02 16:09:57',
-        ship_address: '佛山市顺德区环市北路13号',
-        address: '上海市普陀区金沙江路 1518 弄',
-        price: 10,
-        payment: '支付宝',
-        status: '已发货'
-      }, {
-        number: '20170060320',
-        id: '001',
-        date: '2020-6-02 16:09:57',
-        ship_address: '佛山市顺德区环市北路13号',
-        address: '上海市普陀区金沙江路 1518 弄',
-        price: 10,
-        payment: '支付宝',
-        status: '已发货'
-      }, {
-        number: '20170060320',
-        id: '001',
-        date: '2020-6-02 16:09:57',
-        ship_address: '佛山市顺德区环市北路13号',
-        address: '上海市普陀区金沙江路 1518 弄',
-        price: 10,
-        payment: '支付宝',
-        status: '已发货'
-      }, {
-        number: '20170060320',
-        id: '001',
-        date: '2020-6-02 16:09:57',
-        ship_address: '佛山市顺德区环市北路13号',
-        address: '上海市普陀区金沙江路 1518 弄',
-        price: 10,
-        payment: '支付宝',
-        status: '已发货'
-      }, {
-        number: '20170060320',
-        id: '001',
-        date: '2020-6-02 16:09:57',
-        ship_address: '佛山市顺德区环市北路13号',
-        address: '上海市普陀区金沙江路 1518 弄',
-        price: 10,
-        payment: '支付宝',
-        status: '已发货'
-      }, {
-        number: '20170060320',
-        id: '001',
-        date: '2020-6-02 16:09:57',
-        ship_address: '佛山市顺德区环市北路13号',
-        address: '上海市普陀区金沙江路 1518 弄',
-        price: 10,
-        payment: '支付宝',
-        status: '已发货'
-      }, {
-        number: '20170060320',
-        id: '001',
-        date: '2020-6-02 16:09:57',
-        ship_address: '佛山市顺德区环市北路13号',
-        address: '上海市普陀区金沙江路 1518 弄',
-        price: 10,
-        payment: '支付宝',
-        status: '已发货'
-      }]
+      show: true, // 决定是哪个按钮show
+      tableData: []
     }
   }
 }
@@ -154,4 +144,6 @@ export default {
     height 400px
     margin-left 85px
     margin-top 20px
+  .el-table .pink
+    background-color pink
 </style>

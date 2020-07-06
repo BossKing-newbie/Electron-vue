@@ -102,7 +102,7 @@ export default {
     this.money = this.deliveryDetails[2].money
     this.senderAddress = this.deliveryDetails[0].detailAddress.split('/').join('')
     this.receiveAddress = this.deliveryDetails[1].detailAddress.split('/').join('')
-    this.productsId = this.deliveryDetails[2].product
+    this.productsId = this.deliveryDetails[2].product.split('-')[0]
   }
 }
 </script>
