@@ -1,10 +1,6 @@
 <template>
   <div class="main">
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
-      <el-form-item label="您的性别:">
-        <el-radio v-model="radio" label="man">男</el-radio>
-        <el-radio v-model="radio" label="woman">女</el-radio>
-      </el-form-item>
       <el-form-item prop="account">
         <el-input placeholder="请输入账号" v-model="ruleForm.account" clearable prefix-icon="el-icon-user"></el-input>
       </el-form-item>
@@ -18,10 +14,10 @@
         <el-input placeholder="请输入手机号码" type="phone" clearable v-model="ruleForm.phone" prefix-icon="el-icon-phone"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')" round>注册</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" round>注 册</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="info" round @click="login" class="el-button-login">返回登录</el-button>
+        <el-button type="info" round @click="login" class="el-button-login">返 回 登 录</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -94,8 +90,7 @@ export default {
         phone: [
           { validator: checkPhone, trigger: 'blur' }
         ]
-      },
-      radio: 'man'
+      }
     }
   },
   methods: {
@@ -110,7 +105,7 @@ export default {
       })
     },
     login () {
-      this.$emit('register', 'login', '用户登录')
+      this.$emit('register', 'login', '用 户 登 录')
     }
   }
 }
@@ -120,6 +115,7 @@ export default {
   .main
     margin-left 30px
     margin-right 30px
-  button
+    margin-top 30px
+  .el-button
     width 100%
 </style>

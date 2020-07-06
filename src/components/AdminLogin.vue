@@ -4,7 +4,7 @@
       <i class="el-icon-back" @click="back"></i>
     </div>
     <div class="avatar">
-      <el-avatar :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+      <el-avatar :size="60" src="https://s1.ax1x.com/2020/07/04/NvcGJ1.png"></el-avatar>
     </div>
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item prop="account">
@@ -17,7 +17,7 @@
         <el-button type="primary" round @click="login">登 录</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="info" round @click="register">用 户 注 册</el-button>
+        <el-button type="info" round @click="resetForm('ruleForm')">重 置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: 'LoginChlid',
+  name: 'AdminLogin',
   data () {
     const validateUser = (rule, value, callback) => {
       if (value === '') {
@@ -72,20 +72,20 @@ export default {
         }
       })
     },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    },
     login () {
-      if (this.ruleForm.account === 'admin' && this.ruleForm.pass === '123456') {
+      if (this.ruleForm.account === 'seven' && this.ruleForm.pass === '123456') {
         this.$message({
           showClose: true,
-          message: '登录成功！欢迎您，admin',
+          message: '登录成功！欢迎您，seven',
           type: 'success'
         })
-        this.$router.push('Home')
+        this.$router.push('AdminHome')
       } else {
         this.$message.error('用户名或密码错误！')
       }
-    },
-    register () {
-      this.$emit('register', 'register', '用 户 注 册')
     },
     back () {
       this.$router.push('/')

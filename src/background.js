@@ -18,7 +18,7 @@ function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
     width: 400,
-    height: 600,
+    height: 400,
     center: true,
     resizable: false,
     autoHideMenuBar: true,
@@ -100,14 +100,21 @@ ipcMain.on('changWindowSize', e => {
   win.setResizable(true)
   win.setSize(1050, 700)
   win.center()
-  win.setTitle('主界面')
+  win.setTitle('用户主界面')
   win.setResizable(false)
 })
 ipcMain.on('changLoginSize', e => {
   win.setResizable(true)
-  win.setSize(400, 600)
+  win.setSize(400, 550)
   win.center()
-  win.setTitle('登录界面')
+  win.setTitle('用户登录界面')
+  win.setResizable(false)
+})
+ipcMain.on('changAdminSize', e => {
+  win.setResizable(true)
+  win.setSize(400, 550)
+  win.center()
+  win.setTitle('管理员登录界面')
   win.setResizable(false)
 })
 ipcMain.on('changIndexSize', e => {
@@ -115,6 +122,13 @@ ipcMain.on('changIndexSize', e => {
   win.setSize(400, 400)
   win.center()
   win.setTitle('首页')
+  win.setResizable(false)
+})
+ipcMain.on('changAdminHomeSize', e => {
+  win.setResizable(true)
+  win.setSize(1050, 700)
+  win.center()
+  win.setTitle('管理员主界面')
   win.setResizable(false)
 })
 ipcMain.on('close', e =>
