@@ -1,8 +1,7 @@
 <template>
     <div>
-      <h2>我是首页</h2>
-      <button @click="login">我是用户</button>
-      <button>我是管理员</button>
+      <el-button @click="login" type="primary" round icon="el-icon-user" class="user">我 是 用 户</el-button>
+      <el-button @click="admin" type="primary" round icon="el-icon-s-custom" class="management">我 是 管 理 员</el-button>
     </div>
 </template>
 
@@ -15,7 +14,10 @@ export default {
       ipcRenderer.send('changIndexSize')
     },
     login () {
-      this.$router.push('login')
+      this.$router.push('Login')
+    },
+    admin () {
+      this.$router.push('Admin')
     }
   },
   mounted () {
@@ -24,6 +26,13 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="stylus" scoped>
+  .user
+    margin-top 30px
+    margin-right 10px
+    width 200px
+  .management
+    margin-top 70px
+    margin-right 20px
+    width 200px
 </style>

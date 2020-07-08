@@ -1,23 +1,23 @@
 <template>
   <div class="main">
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
-      <el-form-item prop="userId" style="margin-top:15px">
+      <el-form-item prop="userId">
         <el-input placeholder="请输入账号" v-model="ruleForm.userId" clearable prefix-icon="el-icon-user"></el-input>
       </el-form-item>
-      <el-form-item prop="pass">
-        <el-input placeholder="请输入6~15位密码" type="password" v-model="ruleForm.pass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
+      <el-form-item prop="userPassword">
+        <el-input placeholder="请输入6~15位密码" type="password" v-model="ruleForm.userPassword" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
       </el-form-item>
       <el-form-item prop="checkPass">
         <el-input placeholder="请确认密码" type="password" clearable show-password v-model="ruleForm.checkPass" autocomplete="off" prefix-icon="el-icon-lock"></el-input>
       </el-form-item>
-      <el-form-item prop="phone">
-        <el-input placeholder="请输入手机号码" type="phone" v-model="ruleForm.phone" prefix-icon="el-icon-phone"/>
+      <el-form-item prop="userPhone">
+        <el-input placeholder="请输入手机号码" type="phone" v-model="ruleForm.userPhone" prefix-icon="el-icon-phone"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')" round>注册</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" round>注 册</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="info" round @click="login" class="el-button-login">返回登录</el-button>
+        <el-button type="info" round @click="login" class="el-button-login">返 回 登 录</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -142,7 +142,7 @@ export default {
       })
     },
     login () {
-      this.$emit('register', 'login', '用户登录')
+      this.$emit('register', 'login', '用 户 登 录')
     }
   }
 }
@@ -152,6 +152,7 @@ export default {
   .main
     margin-left 30px
     margin-right 30px
-  button
+    margin-top 30px
+  .el-button
     width 100%
 </style>

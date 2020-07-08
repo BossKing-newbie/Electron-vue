@@ -4,20 +4,19 @@
       <span v-text="title"></span>
     </div>
     <!-- component是一个占位符，:is属性是指定组件的名称 -->
-    <component :is="comName" @register="receive"></component>
+    <component :is="comName"></component>
   </div>
 
 </template>
 <script>
-import LoginChlid from '../components/LoginChlid'
-import RegisterChild from '../components/RegisterChild'
+import AdminLogin from '../components/AdminLogin'
 const { ipcRenderer } = require('electron')
 export default {
-  name: 'Login',
+  name: 'Admin',
   data () {
     return {
       comName: 'login',
-      title: '用 户 登 录'
+      title: '管 理 员 登 录'
     }
   },
   methods: {
@@ -27,17 +26,12 @@ export default {
     close () {
       ipcRenderer.send('close')
     },
-    receive (value1, value2) {
-      this.comName = value1
-      this.title = value2
-    },
     changeLoginSize () {
-      ipcRenderer.send('changLoginSize')
+      ipcRenderer.send('changAdminSize')
     }
   },
   components: {
-    login: LoginChlid,
-    register: RegisterChild
+    login: AdminLogin
   },
   mounted () {
     this.changeLoginSize()

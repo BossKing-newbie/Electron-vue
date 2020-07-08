@@ -32,7 +32,7 @@ import ChangePhone from '../components/el-main/ChangePhone'
 import SameDay from '../components/customer/SameDay'
 // 次日达
 import TheNextDay from '../components/customer/TheNextDay'
-// 72小时达
+// 隔日达
 import SeventyTwo from '../components/customer/SeventyTwo'
 const { ipcRenderer } = require('electron')
 export default {

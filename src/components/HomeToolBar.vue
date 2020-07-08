@@ -24,7 +24,6 @@
           <p style="font-size: 12px">当天送达：最快8小时门到门送达</p>
           <p style="font-size: 12px">次日到达：最快12小时门到门送达</p>
           <p style="font-size: 12px">隔日到达：最快36小时门到门送达</p>
-          <p style="font-size: 20px;color: transparent">这里用于格式</p>
         </div>
       </el-drawer>
     </el-row>
@@ -77,6 +76,7 @@ export default {
   .seven
     background-image: url('https://s1.ax1x.com/2020/06/16/NkD8G6.png')
     margin-top -20px
+    height 488px
   .el-col
     margin-top 150px
 </style>

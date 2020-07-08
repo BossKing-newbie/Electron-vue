@@ -4,7 +4,7 @@
       <i class="el-icon-back" @click="back"></i>
     </div>
     <div class="avatar">
-      <el-avatar :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+      <el-avatar :size="60" src="https://s1.ax1x.com/2020/07/04/NvcGJ1.png"></el-avatar>
     </div>
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item prop="account">
@@ -14,19 +14,18 @@
         <el-input type="password" placeholder="请输入密码" v-model="ruleForm.pass" clearable autocomplete="off" prefix-icon="el-icon-lock"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" round @click="submitForm('ruleForm')">登录</el-button>
+        <el-button type="primary" round @click="login">登 录</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="info" round @click="register">用 户 注 册</el-button>
+        <el-button type="info" round @click="resetForm('ruleForm')">重 置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import Qs from 'qs'
 export default {
-  name: 'LoginChlid',
+  name: 'AdminLogin',
   data () {
     const validateUser = (rule, value, callback) => {
       if (value === '') {
@@ -37,7 +36,7 @@ export default {
         callback()
       }
     }
-    const validatePass = (rule, value, callback) => {
+    var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
       } else {
@@ -64,40 +63,29 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          _this.axios({
-            method: 'post',
-            url: 'http://localhost:8081/user/login',
-            data: Qs.stringify(this.ruleForm),
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            withCredentials: true
-          }).then(function (response) {
-            if (response.data.code === 200) {
-              _this.$message({
-                message: '欢迎您，用户' + response.data.data.userId,
-                type: 'success',
-                center: true
-              })
-              // 将用户信息存入sessionStorage
-              sessionStorage.setItem('user', Qs.stringify(response.data.data))
-              _this.$router.push('Home')
-            } else {
-              _this.$message.error('用户名或密码错误')
-            }
-            console.log(response)
-          })
+          alert('submit!')
         } else {
           console.log('error submit!!')
           return false
         }
       })
     },
-    register () {
-      this.$emit('register', 'register', '用 户 注 册')
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    },
+    login () {
+      if (this.ruleForm.account === 'seven' && this.ruleForm.pass === '123456') {
+        this.$message({
+          showClose: true,
+          message: '登录成功！欢迎您，seven',
+          type: 'success'
+        })
+        this.$router.push('AdminHome')
+      } else {
+        this.$message.error('用户名或密码错误！')
+      }
     },
     back () {
       this.$router.push('/')

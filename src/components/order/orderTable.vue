@@ -3,7 +3,6 @@
   <el-table
     :data="tableData"
     style="width: 100%"
-    :row-class-name="changeTableColor"
     max-height="400">
     <el-table-column
       fixed
@@ -51,13 +50,13 @@
       label="操作"
       width="150">
       <template slot-scope="scope">
-        <el-button v-if="!show"
+        <el-button v-if="changeButton(scope.$index, tableData)"
           @click.native.prevent="cancelReserve(scope.$index, tableData)"
           type="text"
           size="small">
           取消预约
         </el-button>
-        <el-button v-if="show"
+        <el-button
           @click.native.prevent="deleteRow(scope.$index, tableData)"
           type="text"
           size="small">
@@ -66,6 +65,16 @@
       </template>
     </el-table-column>
   </el-table>
+  <el-dialog title="物流信息" :visible.sync="dialogFormVisible" center>
+      <el-timeline :reverse="reverse">
+        <el-timeline-item
+          v-for="(activity, index) in activities"
+          :key="index"
+          :timestamp="activity.timestamp">
+          {{activity.content}}
+        </el-timeline-item>
+      </el-timeline>
+  </el-dialog>
 </div>
 </template>
 
@@ -76,7 +85,6 @@ export default {
   methods: {
     cancelReserve (index, rows) {
       const that = this
-      console.log(rows[index].number)
       this.axios({
         url: 'http://localhost:8081/order/cancel/' + rows[index].number,
         method: 'DELETE'
@@ -99,11 +107,15 @@ export default {
       })
     },
     deleteRow (index, rows) {
-      if (rows[index].status === '预约中') {
-        this.show = false
-      } else {
-        this.show = true
-      }
+      const that = this
+      this.dialogFormVisible = true
+      this.axios({
+        url: 'http://localhost:8081/order/delivery/' + rows[index].number,
+        method: 'get'
+      }).then(function (response) {
+        console.log(response)
+        that.activities = response.data.data
+      })
     },
     selectOrderForm () {
       const data = Qs.parse(sessionStorage.getItem('user'))
@@ -113,15 +125,14 @@ export default {
         method: 'get'
       }).then(function (response) {
         that.tableData = response.data
+        console.log(response.data)
       })
     },
-    changeTableColor (row, rowIndex) {
-      if (row.row.status === '预约中') {
-        this.show = false
-      } else {
-        this.show = true
+    changeButton (index, rows) {
+      if (rows[index].status === '预约中') {
+        return true
       }
-      return ''
+      return false
     }
   },
   mounted () {
@@ -130,7 +141,19 @@ export default {
   data () {
     return {
       show: true, // 决定是哪个按钮show
-      tableData: []
+      tableData: [],
+      reverse: true,
+      activities: [{
+        content: '活动按期开始',
+        timestamp: '2018-04-15'
+      }, {
+        content: '通过审核',
+        timestamp: '2018-04-13'
+      }, {
+        content: '创建成功',
+        timestamp: '2018-04-11'
+      }],
+      dialogFormVisible: false
     }
   }
 }
