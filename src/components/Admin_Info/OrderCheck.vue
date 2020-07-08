@@ -6,15 +6,24 @@
         v-for="item in options"
         :key="item.value"
         :label="item.label"
-        :value="item.value">
+        :value="item.label">
       </el-option>
     </el-select>
     <el-button
       type="primary"
       size="small"
       icon="el-icon-search"
-      style="margin-left: 50px">
+      style="margin-left: 50px"
+      @click="filterSelected(value, tableData)">
       查 询
+    </el-button>
+    <el-button
+      type="primary"
+      size="small"
+      icon="el-icon-refresh"
+      style="margin-left: 20px"
+      @click="initButton">
+      重 置
     </el-button>
     <el-table
       :data="tableData"
@@ -99,7 +108,21 @@ export default {
         value: '选项4',
         label: '已签收'
       }],
-      tableData: [{
+      tableData: []
+    }
+  },
+  methods: {
+    filterSelected (selected, tableData) {
+      this.tableData = tableData.filter(function (currentValue) {
+        return currentValue.status === selected
+      })
+    },
+    initButton () {
+      this.value = ''
+      this.initTable()
+    },
+    initTable () {
+      const tableDate = [{
         num: '12345678',
         name: 'sevenking',
         sname: '郑小姐',
@@ -110,7 +133,7 @@ export default {
         raddress: '广东省汕头市龙湖区XXX别墅',
         time: '2020-07-07 14:04:13',
         product: 'same_day',
-        status: '预约中'
+        status: '已揽件'
       }, {
         num: '12345678',
         name: 'sevenking',
@@ -122,7 +145,7 @@ export default {
         raddress: '广东省汕头市龙湖区XXX别墅',
         time: '2020-07-07 14:04:13',
         product: 'same_day',
-        status: '预约中'
+        status: '已签收'
       }, {
         num: '12345678',
         name: 'sevenking',
@@ -184,7 +207,11 @@ export default {
         product: 'same_day',
         status: '预约中'
       }]
+      this.tableData = tableDate
     }
+  },
+  mounted () {
+    this.initTable()
   }
 }
 </script>
