@@ -1,6 +1,7 @@
 <template>
 <div class="table">
   <el-table
+    v-loading="loading"
     :data="tableData"
     style="width: 100%"
     max-height="400">
@@ -55,6 +56,12 @@
           type="text"
           size="small">
           取消预约
+        </el-button>
+        <el-button v-if="!changeButton(scope.$index, tableData)"
+                   @click.native.prevent="confirmDelivery(scope.$index, tableData)"
+                   type="text"
+                   size="small">
+          确认收货
         </el-button>
         <el-button
           @click.native.prevent="deleteRow(scope.$index, tableData)"
@@ -120,11 +127,13 @@ export default {
     selectOrderForm () {
       const data = Qs.parse(sessionStorage.getItem('user'))
       const that = this
+      this.loading = true
       this.axios({
         url: 'http://localhost:8081/order/select/' + data.userId,
         method: 'get'
       }).then(function (response) {
         that.tableData = response.data
+        that.loading = false
         console.log(response.data)
       })
     },
@@ -133,6 +142,30 @@ export default {
         return true
       }
       return false
+    },
+    // 确认收货
+    confirmDelivery (index, rows) {
+      const that = this
+      this.axios({
+        url: 'http://localhost:8081/order/confirm/' + rows[index].number,
+        method: 'get'
+      }).then(function (response) {
+        console.log(response)
+        if (response.data.code === 200) {
+          that.$message({
+            message: '确认成功',
+            center: true,
+            type: 'success'
+          })
+          that.selectOrderForm()
+        } else {
+          that.$message({
+            message: '确认失败',
+            center: true,
+            type: 'error'
+          })
+        }
+      })
     }
   },
   mounted () {
@@ -143,6 +176,7 @@ export default {
       show: true, // 决定是哪个按钮show
       tableData: [],
       reverse: true,
+      loading: false, // 表格加载参数
       activities: [{
         content: '活动按期开始',
         timestamp: '2018-04-15'
