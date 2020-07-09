@@ -122,7 +122,16 @@ export default {
       this.initTable()
     },
     initTable () {
-      const tableDate = [{
+      const that = this
+      this.axios({
+        url: 'http://localhost:8081/order/check',
+        method: 'get'
+      }).then(function (response) {
+        if (response.data.code === 200) {
+          that.tableData = response.data.data
+        }
+      })
+      /* const tableDate = [{
         num: '12345678',
         name: 'sevenking',
         sname: '郑小姐',
@@ -207,7 +216,7 @@ export default {
         product: 'same_day',
         status: '预约中'
       }]
-      this.tableData = tableDate
+      this.tableData = tableDate */
     }
   },
   mounted () {

@@ -65,7 +65,7 @@
       <div v-for="(item,index) in tableTitle" :key="index" >
         <el-table-column :prop="item.prop" :label="item.label" :width="item.width">
           <template slot-scope="{row,$index}">
-            <el-input v-model="row[item.prop]" v-if="currentEdit === $index" @keyup.enter.native="finishEditClick()"></el-input>
+            <el-input v-model="weight" v-if="currentEdit === $index" @keyup.enter.native="validateInput(weight)" oninput="value=value.replace(/[^\d.]/g,'')"></el-input>
             <span v-else>{{row[item.prop]}}</span>
           </template>
         </el-table-column>
@@ -89,6 +89,7 @@ export default {
       value: '',
       input: '',
       currentEdit: -1,
+      weight: '',
       tableTitle: [
         {
           label: '重量',
@@ -110,12 +111,64 @@ export default {
     }
   },
   methods: {
+    validateInput (value) {
+      if (value === '' || value === null) {
+        this.$message({
+          message: '重量不能为空',
+          center: true,
+          type: 'error'
+        })
+      } else {
+        this.currentEdit = -1
+      }
+    },
     EditClick (scope) {
-      console.log(scope)
       this.currentEdit = scope.$index
     },
-    finishEditClick () {
-      this.currentEdit = -1
+    finishEditClick (scope) {
+      const that = this
+      if (this.weight === null || this.weight === '') {
+        this.$message({
+          message: '重量不能为空',
+          center: true,
+          type: 'error'
+        })
+      } else {
+        // 这是输入的重量
+        scope.row.weight = this.weight
+        const weight = parseFloat(this.weight)
+        const productsWeight = scope.row.productsWeight
+        // eslint-disable-next-line no-undef
+        if (weight > productsWeight) {
+          scope.row.sum = scope.row.price + (weight - productsWeight) * scope.row.productsAddPrice
+        }
+        this.axios({
+          url: 'http://localhost:8081/order/update',
+          method: 'post',
+          data: {
+            num: scope.row.num,
+            weight: weight,
+            sum: scope.row.sum
+          }
+        }).then(function (response) {
+          console.log(response)
+          if (response.data.code === 200) {
+            that.$message({
+              message: '开单成功，所需支付的费用为：' + scope.row.sum + '元',
+              center: true,
+              type: 'success'
+            })
+            that.initTableData()
+          } else {
+            that.$message({
+              message: '开单失败',
+              center: true,
+              type: 'error'
+            })
+          }
+        })
+        this.currentEdit = -1
+      }
     },
     initButton () {
       this.value = ''
@@ -146,7 +199,16 @@ export default {
       }
     },
     initTableData () {
-      const tableData = [{
+      const that = this
+      this.axios({
+        url: 'http://localhost:8081/order/reserve',
+        method: 'get'
+      }).then(function (response) {
+        if (response.data.code === 200) {
+          that.tableData = response.data.data
+        }
+      })
+      /* const tableData = [{
         num: '12345678',
         name: 'sevenking',
         phone: '13168597846',
@@ -196,7 +258,7 @@ export default {
         price: 'null',
         sum: '100'
       }]
-      this.tableData = tableData
+      this.tableData = tableData */
     }
   },
   mounted () {
