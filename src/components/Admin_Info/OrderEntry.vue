@@ -20,14 +20,16 @@
       type="primary"
       size="small"
       icon="el-icon-search"
-      style="margin-left: 50px">
+      style="margin-left: 50px"
+      @click="filterTableData(value, input, tableData)">
       搜 索
     </el-button>
     <el-button
       type="primary"
       size="small"
       icon="el-icon-refresh"
-      style="margin-left: 20px">
+      style="margin-left: 20px"
+      @click="initButton">
       重 置
     </el-button>
     <el-table
@@ -95,65 +97,16 @@ export default {
         }
       ],
       options: [{
-        value: '选项1',
+        value: 'num',
         label: '订单号'
       }, {
-        value: '选项2',
+        value: 'name',
         label: '用户名'
       }, {
-        value: '选项3',
+        value: 'phone',
         label: '手机号'
       }],
-      tableData: [{
-        num: '12345678',
-        name: 'sevenking',
-        phone: '13168597846',
-        weight: 'null',
-        price: 'null',
-        sum: 'null'
-      }, {
-        num: '12345678',
-        name: 'sevenking',
-        phone: '13168597846',
-        weight: 'null',
-        price: 'null',
-        sum: 'null'
-      }, {
-        num: '12345678',
-        name: 'seven ',
-        phone: '13168597846',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }, {
-        num: '12345678',
-        name: 'seven ',
-        phone: '13168597846',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }, {
-        num: '12345678',
-        name: 'seven ',
-        phone: '13168597846',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }, {
-        num: '12345678',
-        name: 'seven ',
-        phone: '13168597846',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }, {
-        num: '12345678',
-        name: 'seven ',
-        phone: '13168597846',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }]
+      tableData: []
     }
   },
   methods: {
@@ -163,7 +116,91 @@ export default {
     },
     finishEditClick () {
       this.currentEdit = -1
+    },
+    initButton () {
+      this.value = ''
+      this.input = ''
+      this.initTableData()
+    },
+    // 过滤方法,即点击查询
+    filterTableData (value, input, tableData) {
+      console.log(value)
+      console.log(input)
+      switch (value) {
+        case 'num':
+          this.tableData = tableData.filter(function (currentValue) {
+            return currentValue.num === input
+          })
+          break
+        case 'phone':
+          this.tableData = tableData.filter(function (currentValue) {
+            return currentValue.phone === input
+          })
+          break
+        case 'name':
+          this.tableData = tableData.filter(function (currentValue) {
+            console.log(currentValue.name)
+            return currentValue.name === input
+          })
+          break
+      }
+    },
+    initTableData () {
+      const tableData = [{
+        num: '12345678',
+        name: 'sevenking',
+        phone: '13168597846',
+        weight: 'null',
+        price: 'null',
+        sum: 'null'
+      }, {
+        num: '12345678',
+        name: 'sevenking',
+        phone: '13168597846',
+        weight: 'null',
+        price: 'null',
+        sum: 'null'
+      }, {
+        num: '12345678',
+        name: 'seven',
+        phone: '13168597846',
+        weight: '2.5kg',
+        price: 'null',
+        sum: '100'
+      }, {
+        num: '12345678',
+        name: 'seven',
+        phone: '13168597846',
+        weight: '2.5kg',
+        price: 'null',
+        sum: '100'
+      }, {
+        num: '12345678',
+        name: 'seven ',
+        phone: '13168597846',
+        weight: '2.5kg',
+        price: 'null',
+        sum: '100'
+      }, {
+        num: '12345678',
+        name: 'seven',
+        phone: '13078163530 ',
+        weight: '2.5kg',
+        price: 'null',
+        sum: '100'
+      }, {
+        num: '12345678',
+        name: 'seven',
+        phone: '13168597846',
+        weight: '2.5kg',
+        price: 'null',
+        sum: '100'
+      }]
+      this.tableData = tableData
     }
+  },
+  mounted () {
+    this.initTableData()
   }
 }
 </script>
