@@ -16,6 +16,13 @@
       style="margin-left: 50px">
       查 询
     </el-button>
+    <el-button
+      type="primary"
+      size="small"
+      icon="el-icon-refresh"
+      style="margin-left: 20px">
+      重 置
+    </el-button>
     <el-table
       :data="tableData"
       stripe
