@@ -20,6 +20,8 @@ import AdminHomeAside from '../components/AdminHomeAside'
 import AdminMainIndex from '../components/Admin_Info/AdminMainIndex'
 import OrderEntry from '../components/Admin_Info/OrderEntry'
 import OrderCheck from '../components/Admin_Info/OrderCheck'
+import WareInput from '../components/Admin_warehouse/WareInput'
+import WareOutput from '../components/Admin_warehouse/WareOutput'
 
 const { ipcRenderer } = require('electron')
 export default {
@@ -50,7 +52,9 @@ export default {
     sidebar: AdminHomeAside,
     mainpage: AdminMainIndex,
     orderentry: OrderEntry,
-    ordercheck: OrderCheck
+    ordercheck: OrderCheck,
+    wareinput: WareInput,
+    wareoutput: WareOutput
   }
 }
 </script>
