@@ -78,7 +78,7 @@
           <el-table-column
             prop="check"
             label="审核是否通过"
-            width="150">
+            width="180">
             <template>
               <el-button
                 @click="nopass"

@@ -28,12 +28,12 @@
       </el-submenu>
       <el-submenu index="3">
         <template slot="title">
-          <i class="el-icon-user"></i>
-          <span slot="title">员工管理</span>
+          <i class="el-icon-postcard"></i>
+          <span slot="title">员工信息管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="3-1" @click="barclick('')">查看员工信息</el-menu-item>
-          <el-menu-item index="3-2" @click="barclick('')">添加员工信息</el-menu-item>
+          <el-menu-item index="3-1" @click="barclick('lookfor')">查看员工信息</el-menu-item>
+          <el-menu-item index="3-2" @click="barclick('add')">添加员工信息</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
