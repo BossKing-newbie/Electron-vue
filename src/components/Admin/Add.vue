@@ -4,33 +4,41 @@
              label-width="100px" class="demo-ruleForm"
              style="margin-top: 80px;margin-left: 50px">
       <el-form-item label="姓名" prop="name">
-        <el-input v-model="ruleForm.name"
+        <el-input v-model="ruleForm.name"  placeholder="请输入姓名"
                   clearable style="width: 200px;margin-left: -400px" size="small"></el-input>
       </el-form-item>
       <el-form-item label="部门" prop="department">
-        <el-input v-model="ruleForm.department"
-                  clearable style="width: 200px;margin-left: -400px" size="small"></el-input>
+        <el-select v-model="ruleForm.department" clearable placeholder="请选择所在部门"
+                   style="width: 200px;margin-left: -400px" size="small">
+          <el-option label="财务部" value="部门1"></el-option>
+          <el-option label="人事部" value="部门2"></el-option>
+          <el-option label="销售部" value="部门3"></el-option>
+          <el-option label="仓库管理部" value="部门4"></el-option>
+          <el-option label="资源采购部" value="部门5"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="职位" prop="work">
-        <el-input v-model="ruleForm.work"
+        <el-input v-model="ruleForm.work"  placeholder="请输入所担任的职位"
                   clearable style="width: 200px;margin-left: -400px" size="small"></el-input>
       </el-form-item>
       <el-form-item label="工号" prop="num">
-        <el-input v-model="ruleForm.num"
+        <el-input v-model="ruleForm.num"  placeholder="工号形如：0xx（000-099）"
                   clearable style="width: 200px;margin-left: -400px" size="small"></el-input>
       </el-form-item>
-      <el-upload
-        class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
+      <el-form-item>
+        <el-upload
+          class="avatar-uploader"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" size="medium"
-                   style="margin-top: 100px;margin-right: 200px;margin-left: -120px" @click="submitForm('ruleForm')">添 加</el-button>
+                   style="margin-top: 20px;margin-right: 200px;margin-left: -120px" @click="submitForm('ruleForm')">添 加</el-button>
         <el-button size="medium" @click="resetForm('ruleForm')">重 置</el-button>
       </el-form-item>
     </el-form>
@@ -43,14 +51,14 @@ export default {
   data () {
     var checkName = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('名字不能为空！'))
+        return callback(new Error('请输入名字！'))
       } else {
         callback()
       }
     }
     var checkDepartment = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入部门！'))
+        callback(new Error('请选择部门！'))
       } else {
         callback()
       }
@@ -63,10 +71,16 @@ export default {
       }
     }
     var checkNum = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入工号！'))
+      if (!value) {
+        return callback(new Error('请输入工号！'))
       } else {
-        callback()
+        const reg = /^0[0-9][0-9]\d{0}$/
+        console.log(reg.test(value))
+        if (reg.test(value)) {
+          callback()
+        } else {
+          return callback(new Error('请输入正确的工号！'))
+        }
       }
     }
     return {
@@ -143,7 +157,7 @@ export default {
     overflow hidden
     width 150px
     height 150px
-    margin-left 450px
+    margin-left 350px
     margin-top -210px
 
   .avatar-uploader:hover
