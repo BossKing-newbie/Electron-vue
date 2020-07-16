@@ -46,8 +46,14 @@ export default {
       this.$emit('rendering-main', c)
     },
     open1 () {
-      const hour = new Date().getHours()
-      const secend = new Date().getMinutes()
+      let hour = new Date().getHours()
+      let secend = new Date().getMinutes()
+      if (hour >= 1 && hour <= 9) {
+        hour = '0' + hour
+      }
+      if (secend >= 1 && secend <= 9) {
+        secend = '0' + secend
+      }
       this.$notify({
         title: '上班打卡成功 ✔️',
         message: '您的上班打卡时间为：' + hour + ':' + secend,
@@ -55,8 +61,14 @@ export default {
       })
     },
     open2 () {
-      const hour = new Date().getHours()
-      const secend = new Date().getMinutes()
+      let hour = new Date().getHours()
+      let secend = new Date().getMinutes()
+      if (hour >= 1 && hour <= 9) {
+        hour = '0' + hour
+      }
+      if (secend >= 1 && secend <= 9) {
+        secend = '0' + secend
+      }
       this.$notify({
         title: '下班打卡成功 ✔️',
         message: '您的下班打卡时间为：' + hour + ':' + secend,

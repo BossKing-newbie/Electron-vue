@@ -22,6 +22,8 @@ import OrderEntry from '../components/Admin_Info/OrderEntry'
 import OrderCheck from '../components/Admin_Info/OrderCheck'
 import WareInput from '../components/Admin_warehouse/WareInput'
 import WareOutput from '../components/Admin_warehouse/WareOutput'
+import LookFor from '../components/Admin/LookFor'
+import Add from '../components/Admin/Add'
 
 const { ipcRenderer } = require('electron')
 export default {
@@ -54,7 +56,9 @@ export default {
     orderentry: OrderEntry,
     ordercheck: OrderCheck,
     wareinput: WareInput,
-    wareoutput: WareOutput
+    wareoutput: WareOutput,
+    lookfor: LookFor,
+    add: Add
   }
 }
 </script>
