@@ -70,6 +70,7 @@
         prop="num"
         label="工号"
         align="center"
+        fixed = 'right'
         width="180">
       </el-table-column>
     </el-table>
@@ -84,46 +85,16 @@ export default {
       value: '',
       input: '',
       options: [{
-        value: '选择1',
+        value: 'name',
         label: '姓名'
       }, {
-        value: '选择2',
+        value: 'num',
         label: '工号'
       }, {
-        value: '选择3',
+        value: 'department',
         label: '部门'
       }],
-      tableData: [{
-        picture: 'https://s1.ax1x.com/2020/07/10/UKsjYQ.png',
-        name: '郑嘉雯',
-        department: '财务部',
-        work: '经理',
-        num: '020'
-      }, {
-        picture: 'https://s1.ax1x.com/2020/07/10/UKsqw8.png',
-        name: '纪佳金',
-        department: '仓库管理部',
-        work: '主管',
-        num: '009'
-      }, {
-        picture: 'https://s1.ax1x.com/2020/07/10/UKsvWj.png',
-        name: '黄昕',
-        department: '销售部',
-        work: '经理',
-        num: '023'
-      }, {
-        picture: 'https://s1.ax1x.com/2020/07/10/UKsXFg.png',
-        name: '任紫薇',
-        department: '人事部',
-        work: '经理',
-        num: '006'
-      }, {
-        picture: 'https://s1.ax1x.com/2020/07/10/UKsLTS.png',
-        name: '官耀威',
-        department: '资源采购部',
-        work: '主管',
-        num: '021'
-      }]
+      tableData: []
     }
   },
   methods: {
@@ -133,6 +104,24 @@ export default {
       } else if (this.input === '') {
         this.$message.error('请输入查询内容！')
       } else {
+        const that = this
+        switch (this.value) {
+          case 'num':
+            this.tableData = this.tableData.filter(function (currentValue) {
+              return currentValue.num === that.input
+            })
+            break
+          case 'name':
+            this.tableData = this.tableData.filter(function (currentValue) {
+              return currentValue.name === that.input
+            })
+            break
+          case 'department':
+            this.tableData = this.tableData.filter(function (currentValue) {
+              return currentValue.department === that.input
+            })
+            break
+        }
         this.$message({
           message: '查询成功！',
           type: 'success'
@@ -142,7 +131,23 @@ export default {
     clearperson () {
       this.value = ''
       this.input = ''
+      this.getTableData()
+    },
+    getTableData () {
+      const that = this
+      this.axios({
+        url: 'http://localhost:8081/employee/select',
+        method: 'get'
+      }).then(function (response) {
+        if (response.data.code === 200) {
+          console.log(response)
+          that.tableData = response.data.data
+        }
+      })
     }
+  },
+  mounted () {
+    this.getTableData()
   }
 }
 </script>

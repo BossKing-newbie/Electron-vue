@@ -10,11 +10,11 @@
       <el-form-item label="部门" prop="department">
         <el-select v-model="ruleForm.department" clearable placeholder="请选择所在部门"
                    style="width: 200px;margin-left: -400px" size="small">
-          <el-option label="财务部" value="部门1"></el-option>
-          <el-option label="人事部" value="部门2"></el-option>
-          <el-option label="销售部" value="部门3"></el-option>
-          <el-option label="仓库管理部" value="部门4"></el-option>
-          <el-option label="资源采购部" value="部门5"></el-option>
+          <el-option label="财务部" value="财务部"></el-option>
+          <el-option label="人事部" value="人事部"></el-option>
+          <el-option label="销售部" value="销售部"></el-option>
+          <el-option label="仓库管理部" value="仓库管理部"></el-option>
+          <el-option label="资源采购部" value="资源采购部"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="职位" prop="work">
@@ -28,9 +28,9 @@
       <el-form-item>
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://localhost:8081/userInfo/upload"
           :show-file-list="false"
-          :on-success="handleAvatarSuccess"
+          :http-request="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload">
           <img v-if="imageUrl" :src="imageUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -77,7 +77,16 @@ export default {
         const reg = /^0[0-9][0-9]\d{0}$/
         console.log(reg.test(value))
         if (reg.test(value)) {
-          callback()
+          this.axios({
+            url: 'http://localhost:8081/employee/exit/' + value,
+            method: 'get'
+          }).then(function (response) {
+            if (response.data.code === 200) {
+              callback()
+            } else {
+              return callback(new Error('该工号已存在！'))
+            }
+          })
         } else {
           return callback(new Error('请输入正确的工号！'))
         }
@@ -111,7 +120,26 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          const that = this
+          this.axios({
+            url: 'http://localhost:8081/employee/insert',
+            method: 'post',
+            data: {
+              num: that.ruleForm.num,
+              name: that.ruleForm.name,
+              department: that.ruleForm.department,
+              work: that.ruleForm.work,
+              imageUrl: that.imageUrl
+            }
+          }).then(function (response) {
+            if (response.data.code === 200) {
+              that.$message({
+                message: '添加员工成功！',
+                type: 'success'
+              })
+              that.resetForm('ruleForm')
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -122,8 +150,31 @@ export default {
       this.$refs[formName].resetFields()
       this.imageUrl = ''
     },
-    handleAvatarSuccess (res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
+    handleAvatarSuccess (file) {
+      // 定义当前指针域
+      const _this = this
+      const formData = new FormData()
+      formData.append('avatar', file.file)
+      formData.append('avatarName', this.ruleForm.num)
+      console.log(formData)
+      this.axios({
+        method: 'post',
+        url: 'http://localhost:8081/userInfo/upload',
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        console.log(response.data)
+        if (response.data.code === 200) {
+          _this.$message({
+            message: '上传成功！',
+            type: 'success'
+          })
+          _this.imageUrl = response.data.data.imageUrl
+          console.log(response.data.data.imageUrl)
+        }
+      })
     },
     beforeAvatarUpload (file) {
       const isJPGorPNG = file.type === 'image/jpeg' || 'image/png'
