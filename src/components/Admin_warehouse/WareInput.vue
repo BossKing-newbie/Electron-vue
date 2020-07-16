@@ -4,15 +4,19 @@
       <el-tab-pane label="货物入库审核" name="first">
         <el-form :label-position="labelPosition" label-width="200px"
                  :model="formLabelAlign" style="margin-left: 50px;margin-top: 20px"
-                 status-icon :rules="rules" ref="formLabelAlign" class="demo-ruleForm">
+                 status-icon  ref="formLabelAlign" class="demo-ruleForm">
           <el-form-item label="入库单流水号：" prop="warehousenum">
-            <el-tag type="info" effect="plain" style="margin-left: -404px;width: 200px;font-size: 13px">12d5f6h8e2</el-tag>
+            <el-tag type="info" effect="plain" style="margin-left: -404px;width: 200px;font-size: 13px">{{formLabelAlign.warehousenum}}</el-tag>
           </el-form-item>
           <el-form-item label="还未入库订单选择：" prop="ordernum">
             <el-select v-model="formLabelAlign.ordernum" placeholder="请选择未入库的订单号"
                        size="small" style="width: 200px;margin-left: -177px" clearable>
-              <el-option label="订单状态为“已揽件”" value="shanghai"></el-option>
-              <el-option label="ffh25ft6" value="beijing"></el-option>
+              <el-option
+                v-for="item in selectedOptions"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
             </el-select>
             <el-button type="primary" @click="sure" size="small" style="margin-left: 150px" icon="el-icon-check">确 定</el-button>
           </el-form-item>
@@ -23,11 +27,11 @@
           <el-form-item label="送货入库人员：" prop="name">
             <el-select v-model="formLabelAlign.name" placeholder="请选择送货人员"
                        size="small" style="width: 200px;margin-left: -404px" clearable>
-              <el-option label="郑嘉雯" value="seven"></el-option>
-              <el-option label="纪佳金" value="king"></el-option>
-              <el-option label="黄昕" value="yellow"></el-option>
-              <el-option label="任紫薇" value="ziwei"></el-option>
-              <el-option label="官耀威" value="yaowei"></el-option>
+              <el-option label="郑嘉雯" value="郑嘉雯"></el-option>
+              <el-option label="纪佳金" value="纪佳金"></el-option>
+              <el-option label="黄昕" value="黄昕"></el-option>
+              <el-option label="任紫薇" value="任紫薇"></el-option>
+              <el-option label="官耀威" value="官耀威"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -77,17 +81,18 @@
           </el-table-column>
           <el-table-column
             prop="check"
+            fixed="right"
             label="审核是否通过"
-            width="150">
-            <template>
+            width="180">
+            <template slot-scope="scope">
               <el-button
-                @click="nopass"
+                @click="nopass(scope)"
                 type="primary"
                 size="small">
                 打 回
               </el-button>
               <el-button
-                @click="pass"
+                @click="pass(scope)"
                 type="primary"
                 size="small">
                 通 过
@@ -199,56 +204,15 @@ export default {
       labelPosition: 'left',
       value: '',
       input: '',
+      selectedOptions: [], // 返回已揽件的订单序列
       formLabelAlign: {
         warehousenum: '',
         ordernum: '',
         order: '',
         name: ''
       },
-      tableData: [{
-        ordernum: '12345678',
-        sname: '王小虎',
-        sphone: '13168597846',
-        saddress: '上海市普陀区金沙江路 1518 弄',
-        rname: '王小虎',
-        rphone: '13168597846',
-        raddress: '广东省佛山市顺德区大良街道环市东路18明洋楼D座508',
-        weight: '2.5'
-      }],
+      tableData: [],
       tableData2: [{
-        warehousenum: '1f52g5g8f6',
-        ordernum: '12345678',
-        sname: '郑嘉雯',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市东路18明洋楼D座508',
-        rname: '纪傻逼',
-        rphone: '13078163530',
-        raddress: '上海市普陀区金沙江路 1518 弄',
-        product: 'same_day',
-        pname: '任紫薇'
-      }, {
-        warehousenum: '1f52g5g8f6',
-        ordernum: '12345678',
-        sname: '郑嘉雯',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市东路18明洋楼D座508',
-        rname: '纪傻逼',
-        rphone: '13078163530',
-        raddress: '上海市普陀区金沙江路 1518 弄',
-        product: 'same_day',
-        pname: '任紫薇'
-      }, {
-        warehousenum: '1f52g5g8f6',
-        ordernum: '12345678',
-        sname: '郑嘉雯',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市东路18明洋楼D座508',
-        rname: '纪傻逼',
-        rphone: '13078163530',
-        raddress: '上海市普陀区金沙江路 1518 弄',
-        product: 'same_day',
-        pname: '任紫薇'
-      }, {
         warehousenum: '1f52g5g8f6',
         ordernum: '12345678',
         sname: '郑嘉雯',
@@ -261,31 +225,62 @@ export default {
         pname: '任紫薇'
       }],
       options: [{
-        value: '选项1',
+        value: 'warehousenum',
         label: '入库单号'
       }, {
-        value: '选项2',
+        value: 'ordernum',
         label: '订单号'
       }, {
-        value: '选项3',
+        value: 'product',
         label: '快递产品'
       }, {
-        value: '选项4',
+        value: 'pname',
         label: '送货入库人员'
       }]
     }
   },
   methods: {
+    alreadyPackage () {
+      const that = this
+      this.axios({
+        url: 'http://localhost:8081/order/already',
+        method: 'get'
+      }).then(function (response) {
+        that.formLabelAlign.warehousenum = response.data.wareHouseNum
+        that.selectedOptions = response.data.list
+        console.log(response.data)
+      })
+    },
+    warehousing () {
+      const that = this
+      this.axios({
+        url: 'http://localhost:8081/order/warehousing',
+        method: 'get'
+      }).then(function (response) {
+        console.log(response.data)
+        that.tableData2 = response.data.data
+      })
+    },
     handleClick (tab, event) {
-      console.log(tab, event)
+      if (tab.index === '1') {
+        this.warehousing()
+      }
     },
     sure () {
       if (!this.formLabelAlign.ordernum) {
         this.$message.error('请选择未入库的订单号！')
       } else {
-        this.$message({
-          message: '查询成功！',
-          type: 'success'
+        const that = this
+        this.axios({
+          url: 'http://localhost:8081/order/already/' + this.formLabelAlign.ordernum,
+          method: 'get'
+        }).then(function (response) {
+          console.log(response.data)
+          that.tableData = response.data.data
+          that.$message({
+            message: '查询成功！',
+            type: 'success'
+          })
         })
       }
     },
@@ -293,23 +288,62 @@ export default {
       if (!this.formLabelAlign.order) {
         this.$message.error('请输入未入库的订单号！')
       } else {
-        this.$message({
-          message: '查询成功！',
-          type: 'success'
+        const that = this
+        this.axios({
+          url: 'http://localhost:8081/order/already/' + this.formLabelAlign.order,
+          method: 'get'
+        }).then(function (response) {
+          console.log(response.data)
+          that.tableData = response.data.data
+          that.$message({
+            message: '查询成功！',
+            type: 'success'
+          })
         })
       }
     },
-    nopass () {
+    nopass (scope) {
       // 审核不通过
-      this.$message.error('审核不通过，请返回“物流业务开单”界面进行处理！')
+      console.log(scope.row.ordernum)
+      const that = this
+      this.axios({
+        url: 'http://localhost:8081/order/goBack/' + scope.row.ordernum,
+        method: 'post'
+      }).then(function (response) {
+        if (response.data.code === 200) {
+          console.log(response)
+          that.$message.error('审核不通过，请返回“物流业务开单”界面进行处理！')
+          that.clearinput()
+        } else {
+          that.clearinput()
+          that.$message.error('抱歉，服务器出现问题！')
+        }
+      })
     },
-    pass () {
+    pass (scope) {
       if (!this.formLabelAlign.name) {
         this.$message.error('请选择送货人员！')
       } else {
-        this.$message({
-          message: '审核通过！',
-          type: 'success'
+        // 审核通过
+        const that = this
+        this.axios({
+          url: 'http://localhost:8081/order/warehouse',
+          method: 'post',
+          data: {
+            warehouseNum: that.formLabelAlign.warehousenum, // 流水单号
+            orderFormNumber: scope.row.ordernum, // 订单号
+            warehousingPersonnel: that.formLabelAlign.name, // 入库人员
+            outboundStaff: ''
+          }
+        }).then(function (response) {
+          if (response.data.code === 200) {
+            console.log(response)
+            that.$message.success('审核通过！')
+            that.clearinput()
+          } else {
+            that.clearinput()
+            that.$message.error('抱歉，服务器出现问题！')
+          }
         })
       }
     },
@@ -319,6 +353,29 @@ export default {
       } else if (!this.input) {
         this.$message.error('请输入查询内容！')
       } else {
+        const that = this
+        switch (this.value) {
+          case 'warehousenum':
+            this.tableData2 = this.tableData2.filter(function (currentValue) {
+              return currentValue.warehousenum === that.input
+            })
+            break
+          case 'ordernum':
+            this.tableData2 = this.tableData2.filter(function (currentValue) {
+              return currentValue.ordernum === that.input
+            })
+            break
+          case 'product':
+            this.tableData2 = this.tableData2.filter(function (currentValue) {
+              return currentValue.product === that.input
+            })
+            break
+          case 'pname':
+            this.tableData2 = this.tableData2.filter(function (currentValue) {
+              return currentValue.pname === that.input
+            })
+            break
+        }
         this.$message({
           message: '查询成功！',
           type: 'success'
@@ -326,9 +383,17 @@ export default {
       }
     },
     clearinput () {
+      this.tableData = []
       this.value = ''
       this.input = ''
+      this.formLabelAlign.ordernum = ''
+      this.formLabelAlign.order = ''
+      this.formLabelAlign.name = ''
+      this.warehousing()
     }
+  },
+  mounted () {
+    this.alreadyPackage()
   }
 }
 </script>

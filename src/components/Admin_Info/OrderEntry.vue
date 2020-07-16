@@ -148,7 +148,8 @@ export default {
           data: {
             num: scope.row.num,
             weight: weight,
-            sum: scope.row.sum
+            sum: scope.row.sum,
+            status: '已揽件'
           }
         }).then(function (response) {
           console.log(response)
@@ -208,57 +209,6 @@ export default {
           that.tableData = response.data.data
         }
       })
-      /* const tableData = [{
-        num: '12345678',
-        name: 'sevenking',
-        phone: '13168597846',
-        weight: 'null',
-        price: 'null',
-        sum: 'null'
-      }, {
-        num: '12345678',
-        name: 'sevenking',
-        phone: '13168597846',
-        weight: 'null',
-        price: 'null',
-        sum: 'null'
-      }, {
-        num: '12345678',
-        name: 'seven',
-        phone: '13168597846',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }, {
-        num: '12345678',
-        name: 'seven',
-        phone: '13168597846',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }, {
-        num: '12345678',
-        name: 'seven ',
-        phone: '13168597846',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }, {
-        num: '12345678',
-        name: 'seven',
-        phone: '13078163530 ',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }, {
-        num: '12345678',
-        name: 'seven',
-        phone: '13168597846',
-        weight: '2.5kg',
-        price: 'null',
-        sum: '100'
-      }]
-      this.tableData = tableData */
     }
   },
   mounted () {

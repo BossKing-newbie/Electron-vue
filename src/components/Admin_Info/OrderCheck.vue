@@ -107,6 +107,9 @@ export default {
       }, {
         value: '选项4',
         label: '已签收'
+      }, {
+        value: '选项5',
+        label: '已入库'
       }],
       tableData: []
     }
@@ -131,92 +134,6 @@ export default {
           that.tableData = response.data.data
         }
       })
-      /* const tableDate = [{
-        num: '12345678',
-        name: 'sevenking',
-        sname: '郑小姐',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市北路13号承德楼A座402',
-        rname: '纪先生',
-        rphone: '13078163530',
-        raddress: '广东省汕头市龙湖区XXX别墅',
-        time: '2020-07-07 14:04:13',
-        product: 'same_day',
-        status: '已揽件'
-      }, {
-        num: '12345678',
-        name: 'sevenking',
-        sname: '郑小姐',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市北路13号承德楼A座402',
-        rname: '纪先生',
-        rphone: '13078163530',
-        raddress: '广东省汕头市龙湖区XXX别墅',
-        time: '2020-07-07 14:04:13',
-        product: 'same_day',
-        status: '已签收'
-      }, {
-        num: '12345678',
-        name: 'sevenking',
-        sname: '郑小姐',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市北路13号承德楼A座402',
-        rname: '纪先生',
-        rphone: '13078163530',
-        raddress: '广东省汕头市龙湖区XXX别墅',
-        time: '2020-07-07 14:04:13',
-        product: 'same_day',
-        status: '预约中'
-      }, {
-        num: '12345678',
-        name: 'sevenking',
-        sname: '郑小姐',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市北路13号承德楼A座402',
-        rname: '纪先生',
-        rphone: '13078163530',
-        raddress: '广东省汕头市龙湖区XXX别墅',
-        time: '2020-07-07 14:04:13',
-        product: 'same_day',
-        status: '预约中'
-      }, {
-        num: '12345678',
-        name: 'sevenking',
-        sname: '郑小姐',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市北路13号承德楼A座402',
-        rname: '纪先生',
-        rphone: '13078163530',
-        raddress: '广东省汕头市龙湖区XXX别墅',
-        time: '2020-07-07 14:04:13',
-        product: 'same_day',
-        status: '预约中'
-      }, {
-        num: '12345678',
-        name: 'sevenking',
-        sname: '郑小姐',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市北路13号承德楼A座402',
-        rname: '纪先生',
-        rphone: '13078163530',
-        raddress: '广东省汕头市龙湖区XXX别墅',
-        time: '2020-07-07 14:04:13',
-        product: 'same_day',
-        status: '预约中'
-      }, {
-        num: '12345678',
-        name: 'sevenking',
-        sname: '郑小姐',
-        sphone: '13168597846',
-        saddress: '广东省佛山市顺德区大良街道环市北路13号承德楼A座402',
-        rname: '纪先生',
-        rphone: '13078163530',
-        raddress: '广东省汕头市龙湖区XXX别墅',
-        time: '2020-07-07 14:04:13',
-        product: 'same_day',
-        status: '预约中'
-      }]
-      this.tableData = tableDate */
     }
   },
   mounted () {
